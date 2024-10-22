@@ -3,7 +3,7 @@ OptionMail = Option:extend()
 function OptionMail:new()
     local name = "Mail"
     local icon = love.graphics.newImage("Icons/Mail.png")
-    local index = 2.5
+    local index = 3
     OptionMail.super.new(self, name, icon, index)
 end
 

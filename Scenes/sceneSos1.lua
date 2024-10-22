@@ -3,7 +3,7 @@ SceneSos1 = Hidable:extend()
 function SceneSos1:new()
     self.icon = love.graphics.newImage("Icons/Wifi.png")
     self.desiredIconLength = love.graphics.getHeight() / 10
-    self.font = love.graphics.newFont("Fonts/Pinscher.otf", self.desiredIconLength)
+    self.font = love.graphics.newFont("Fonts/Pinscher.otf", Terminal:getHeight() / 5)
 
     self.x = Terminal:getX()
     self.y = Terminal:getY()

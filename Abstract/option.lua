@@ -5,15 +5,17 @@ function Option:new(name, icon, index)
     self.icon = icon
     self.index = index
 
-    self.desiredIconLength = love.graphics.getHeight() / 20
-    self.margin = self.desiredIconLength / 4
-    self.optionHeight = self.desiredIconLength + 2 * self.margin
+    self.desiredIconLength = love.graphics.getHeight() / 25
+    self.iconMargin = self.desiredIconLength / 2
+    self.textMargin = self.desiredIconLength / 3
+    self.optionHeight = self.desiredIconLength + 2 * self.textMargin
     self.optionWidth = Terminal:getWidth()
 
     self.hovering = false
 
     self.x = Terminal:getX()
     self.y = Terminal:getY() + (self.index - 1) * self.desiredIconLength
+    self.font = love.graphics.newFont("Fonts/Pinscher.otf", self.desiredIconLength)
 end
 
 function Option:update(dt)
@@ -24,22 +26,20 @@ function Option:draw()
     local iconSx = self.desiredIconLength / self.icon:getWidth()
     local iconSy = self.desiredIconLength / self.icon:getHeight()
 
-    local font = love.graphics.newFont("Fonts/Pinscher.otf", self.desiredIconLength)
-
-    local iconX = self.x + self.margin
-    local iconY = self.y + self.margin
-    local textX = self.x + self.margin + (self.desiredIconLength + self.margin)
-    local textY = self.y + self.margin
+    local iconX = self.x + self.iconMargin
+    local iconY = self.y + self.iconMargin
+    local textX = self.x + self.iconMargin + (self.desiredIconLength + self.textMargin)
+    local textY = self.y + self.iconMargin
 
     if self.hovering then
-        love.graphics.rectangle("fill", self.x, self.y, self.optionWidth, self.optionHeight)
+        love.graphics.rectangle("fill", self.x, self.y + self.iconMargin - self.textMargin, self.optionWidth, self.optionHeight)
 
-        local blackShader = love.graphics.newShader(love.filesystem.read("Shaders/convertToBlack.glsl"))
+        local blackShader = Terminal:getInvertShader()
         love.graphics.setShader(blackShader)
     end
 
     love.graphics.draw(self.icon, iconX, iconY, 0, iconSx, iconSy)
-    love.graphics.print(self.name, font, textX, textY)
+    love.graphics.print(self.name, self.font, textX, textY)
     love.graphics.setShader()
 end
 

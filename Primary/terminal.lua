@@ -1,10 +1,12 @@
 Terminal = Object:extend()
 
 function Terminal:load()
-    self.terminalWidth = love.graphics.getWidth() / 2
-    self.terminalHeight = love.graphics.getHeight() / 2
+    self.terminalWidth = love.graphics.getWidth() * 1.9/5
+    self.terminalHeight = love.graphics.getHeight() * 2/5
     self.terminalX = love.graphics.getWidth() / 2 - self.terminalWidth / 2
-    self.terminalY = love.graphics.getHeight() / 2 - self.terminalHeight / 3 * 2
+    self.terminalY = love.graphics.getHeight() / 2 - self.terminalHeight * 2.63/3
+
+    self.invertShader = love.graphics.newShader(love.filesystem.read("Shaders/convertToBlack.glsl"))
 
     self.hidables = {}
     self.hidables["Menu"] = Menu()
@@ -27,11 +29,13 @@ function Terminal:draw()
     -- love.graphics.setLineWidth(3)
     -- love.graphics.rectangle("line", self.terminalX, self.terminalY, self.terminalWidth, self.terminalHeight)
 
+    -- love.graphics.setShader(Terminal:getCrtShader())
     for _, currHidable in pairs(self.hidables) do
         if currHidable:isVisible() then
             currHidable:draw()
         end
     end
+    -- love.graphics.setShader()
 end
 
 function Terminal:mousereleased(cursorX, cursorY)
@@ -74,4 +78,16 @@ end
 
 function Terminal:getHidables()
     return self.hidables
+end
+
+function Terminal:getHidable(name)
+    return self.hidables[name]
+end
+
+function Terminal:getInvertShader()
+    return self.invertShader
+end
+
+function Terminal:getCrtShader()
+    return self.crtShader
 end

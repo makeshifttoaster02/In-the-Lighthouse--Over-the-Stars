@@ -5,10 +5,11 @@ function Taskbar:load()
     self.y = Terminal:getHeight() + Terminal:getY()
     self.date = "05/18/2083"
 
-    self.buttonMargin = love.graphics.getHeight() / 100
+    self.buttonVerticalMargin = love.graphics.getHeight() / 40
+    self.buttonHorizontalMargin = self.buttonVerticalMargin * 2
     self.buttonFontSize = love.graphics.getHeight() / 50
-    self.button = BackButton(self.x, self.y + self.buttonMargin, "Back", self.buttonFontSize)
-    self.button:setX(self.x + Terminal:getWidth() - self.button:getWidth() - self.buttonMargin)
+    self.button = BackButton(self.x, self.y + self.buttonVerticalMargin, "Back", self.buttonFontSize)
+    self.button:setX(self.x + Terminal:getWidth() - self.button:getWidth() - self.buttonHorizontalMargin)
 
     self.dateFontSize = Terminal:getHeight() / 20
     self.dateFont = love.graphics.newFont("Fonts/Pinscher.otf", self.dateFontSize)
@@ -20,13 +21,20 @@ function Taskbar:update(dt, cursorX, cursorY)
 end
 
 function Taskbar:draw()
+    -- love.graphics.setLineWidth(3)
+    -- love.graphics.rectangle("line", self.x, self.y, Terminal:getWidth(), self.button:getHeight() + 2 * self.buttonVerticalMargin)
+
     local dateWidth = self.dateFont:getWidth(self.date)
-    local dateX = self.x + Terminal:getWidth() - self.button:getWidth() - dateWidth - self.dateMargin - self.buttonMargin
-    local dateY = self.y - self.dateFontSize + self.button:getHeight() - self.dateMargin + self.buttonMargin
+    local dateX = self.x + Terminal:getWidth() - self.button:getWidth() - dateWidth - self.dateMargin - self.buttonHorizontalMargin
+    local dateY = self.y - self.dateFontSize + self.button:getHeight() - self.dateMargin + self.buttonVerticalMargin
     love.graphics.print(self.date, self.dateFont, dateX, dateY)
     self.button:draw()
 end
 
 function Taskbar:mousereleased(cursorX, cursorY)
     self.button:mousereleased(cursorX, cursorY)
+end
+
+function Taskbar:getHeight()
+    return self.button:getHeight() + 2 * self.buttonVerticalMargin
 end

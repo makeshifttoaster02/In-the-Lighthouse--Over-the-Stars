@@ -3,7 +3,7 @@ OptionComms = Option:extend()
 function OptionComms:new()
     local name = "Comms"
     local icon = love.graphics.newImage("Icons/Comms.png")
-    local index = 4
+    local index = 5
     OptionComms.super.new(self, name, icon, index)
 end
 

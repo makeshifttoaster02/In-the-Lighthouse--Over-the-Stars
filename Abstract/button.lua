@@ -25,7 +25,7 @@ function Button:draw()
 
     if self.hovering then
         love.graphics.rectangle("fill", self.x, self.y, self.width, self.height, self.radius)
-        local blackShader = love.graphics.newShader(love.filesystem.read("Shaders/convertToBlack.glsl"))
+        local blackShader = Terminal:getInvertShader()
         love.graphics.setShader(blackShader)
     end
 

@@ -3,7 +3,7 @@ OptionSos = Option:extend()
 function OptionSos:new()
     local name = "SOS"
     local icon = love.graphics.newImage("Icons/Sos.png")
-    local index = 7
+    local index = 9
     OptionSos.super.new(self, name, icon, index)
 end
 
