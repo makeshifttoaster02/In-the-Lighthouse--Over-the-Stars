@@ -10,8 +10,8 @@ function SceneProtected1:new()
     self.sideMargin = Terminal:getWidth() / 2 - self.font:getWidth("_ _ _ _ _ _") / 2.4
 
     self.textYMargin = Terminal:getHeight() / 10
-    self.textX = Terminal:getX()
-    self.textY = Terminal:getY() + self.textYMargin
+    self.textX = 0
+    self.textY = self.textYMargin
 
     self.slotYMargin = Terminal:getHeight() * 2/3 - self.textYMargin
     self.letterCursorPresent = false
@@ -29,11 +29,11 @@ end
 
 function SceneProtected1:draw()
     love.graphics.printf(self.text, self.font, self.textX, self.textY, Terminal:getWidth(), "center")
-    local letterX = Terminal:getX() + self.sideMargin - (self.font:getWidth(self.slots[1]) + self.slotMargin)
+    local letterX = self.sideMargin - (self.font:getWidth(self.slots[1]) + self.slotMargin)
     for i = 1, #self.slots do
         local currLetter = self.slots[i]
         letterX = letterX + (self.font:getWidth(currLetter) + self.slotMargin)
-        local letterY = Terminal:getY() + self.slotYMargin
+        local letterY = self.slotYMargin
         love.graphics.print(currLetter, self.font, letterX, letterY)
 
         if self.letterCursorPresent and i == self.currSlotIndex then

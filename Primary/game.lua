@@ -2,9 +2,11 @@ Game = Object:extend()
 
 function Game:load()
     math.randomseed(os.time())
-    TEsound.volume("all", 0.05)
+    TEsound.volume("all", 0.00)
     TEsound.playLooping("Sounds/Ambient 1.mp3", "stream")
+
     Screen:load()
+    self.screenCanvas = love.graphics.newCanvas(Screen:getWidth(), Screen:getHeight())
 end
 
 function Game:update(dt)
@@ -15,7 +17,7 @@ function Game:update(dt)
 end
 
 function Game:draw()
-    Screen:draw()
+    self:drawScreen()
 end
 
 function Game:mousereleased(cursorX, cursorY, button)
@@ -27,4 +29,22 @@ end
 
 function Game:keypressed(key)
     Screen:keypressed(key)
+end
+
+function Game:wheelmoved(y)
+    Screen:wheelmoved(y)
+end
+
+function Game:drawScreen()
+    love.graphics.setCanvas(self.screenCanvas)
+    love.graphics.clear()
+
+    Screen:draw()
+
+    love.graphics.setCanvas()
+
+    love.graphics.setShader(Screen:getCrtShader())
+    love.graphics.draw(self.screenCanvas, Terminal:getX(), Terminal:getY(), 0, 1, 1)
+
+    love.graphics.setShader()
 end

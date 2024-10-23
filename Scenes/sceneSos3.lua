@@ -6,8 +6,8 @@ function SceneSos3:new()
     self.font = love.graphics.newFont("Fonts/Pinscher.otf", love.graphics.getHeight() / 20)
     self.text = "Couldn't find an access point. We'll keep trying."
 
-    self.x = Terminal:getX()
-    self.y = Terminal:getY()
+    self.x = 0
+    self.y = 0
     self.xIconMargin = Terminal:getWidth() / 10
     self.yIconMargin = Terminal:getHeight() / 2 - self.desiredIconLength / 2
 

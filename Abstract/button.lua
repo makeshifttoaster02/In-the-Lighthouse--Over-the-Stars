@@ -38,7 +38,9 @@ function Button:mousereleased(cursorX, cursorY)
 end
 
 function Button:withinBounds(cursorX, cursorY)
-    return self.x <= cursorX and cursorX <= self.x + self.width and self.y <= cursorY and cursorY <= self.y + self.height
+    local canvasX = cursorX - Terminal:getX()
+    local canvasY = cursorY - Terminal:getY()
+    return self.x <= canvasX and canvasX <= self.x + self.width and self.y <= canvasY and canvasY <= self.y + self.height
 end
 
 function Button:markHovering(cursorX, cursorY)

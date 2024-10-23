@@ -7,8 +7,8 @@ function SceneSos2:new()
     self.text = "Searching for nearest SOS access point "
     self.periodText = "."
 
-    self.x = Terminal:getX()
-    self.y = Terminal:getY()
+    self.x = 0
+    self.y = 0
     self.xIconMargin = Terminal:getWidth() / 10
     self.yIconMargin = Terminal:getHeight() / 2 - self.desiredIconLength / 2
 

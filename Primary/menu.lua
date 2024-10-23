@@ -29,6 +29,7 @@ function Menu:mousereleased(cursorX, cursorY)
             local currOption = self.options[i]
             if currOption:withinBounds(cursorX, cursorY) then
                 currOption:goToScene()
+                break
             end
         end
     end

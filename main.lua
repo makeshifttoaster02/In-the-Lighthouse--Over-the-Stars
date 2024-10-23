@@ -9,6 +9,8 @@ RequireDirectory("Abstract")
 RequireDirectory("Options")
 RequireDirectory("Scenes")
 RequireDirectory("Buttons")
+RequireDirectory("MailEntries")
+RequireDirectory("Messages")
 
 function love.load()
     Game:load()
@@ -28,4 +30,8 @@ end
 
 function love.keypressed(key, scancode, isrepeat)
     Game:keypressed(key)
+end
+
+function love.wheelmoved(x, y)
+    Game:wheelmoved(y)
 end

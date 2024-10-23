@@ -9,5 +9,5 @@ end
 
 function OptionMail:goToScene()
     Terminal:hideAll()
-    -- Terminal:getHidables()["SceneMail1"]:show()
+    Terminal:getHidables()["SceneMail1"]:show()
 end

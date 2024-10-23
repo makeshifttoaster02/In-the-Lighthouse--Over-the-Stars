@@ -6,3 +6,8 @@ function OptionRadar:new()
     local index = 7
     OptionRadar.super.new(self, name, icon, index)
 end
+
+function OptionRadar:goToScene()
+    Terminal:hideAll()
+    Terminal:getHidable("SceneRadar1"):show()
+end

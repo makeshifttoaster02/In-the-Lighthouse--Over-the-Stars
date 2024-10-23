@@ -13,8 +13,8 @@ function Option:new(name, icon, index)
 
     self.hovering = false
 
-    self.x = Terminal:getX()
-    self.y = Terminal:getY() + (self.index - 1) * self.desiredIconLength
+    self.x = 0
+    self.y = (self.index - 1) * self.desiredIconLength
     self.font = love.graphics.newFont("Fonts/Pinscher.otf", self.desiredIconLength)
 end
 
@@ -55,7 +55,9 @@ function Option:markHovering(cursorX, cursorY)
 end
 
 function Option:withinBounds(cursorX, cursorY)
-    return self.x <= cursorX and cursorX <= self.x + self.optionWidth and self.y <= cursorY and cursorY <= self.y + self.optionHeight
+    local canvasX = cursorX - Terminal:getX()
+    local canvasY = cursorY - Terminal:getY()
+    return self.x <= canvasX and canvasX <= self.x + self.optionWidth and self.y <= canvasY and canvasY <= self.y + self.optionHeight
 end
 
 function Option:goToScene()

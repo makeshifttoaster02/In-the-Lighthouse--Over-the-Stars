@@ -4,8 +4,8 @@ function SceneProtected2:new()
     self.icon = love.graphics.newImage("Icons/Incorrect.png")
     self.desiredIconLength = love.graphics.getHeight() / 4
 
-    self.x = Terminal:getX()
-    self.y = Terminal:getY()
+    self.x = 0
+    self.y = 0
     self.xIconMargin = Terminal:getWidth() / 2 - self.desiredIconLength / 2
     self.yIconMargin = Terminal:getHeight() / 2 - self.desiredIconLength / 2
 

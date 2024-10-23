@@ -20,9 +20,16 @@ end
 function Hidable:mousereleased(cursorX, cursorY)
 end
 
+function Hidable:wheelmoved(y)
+end
+
 function Hidable:keypressed(key)
 end
 
 function Hidable:restoreDefaults()
 
+end
+
+function Hidable:isMailMessage()
+    return false
 end

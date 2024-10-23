@@ -15,6 +15,13 @@ function Terminal:load()
     self.hidables["SceneSos3"] = SceneSos3()
     self.hidables["SceneProtected1"] = SceneProtected1()
     self.hidables["SceneProtected2"] = SceneProtected2()
+    self.hidables["SceneMail1"] = SceneMail1()
+    self.hidables["SceneMail1Message1"] = SceneMail1Message1()
+    self.hidables["SceneMail1Message2"] = SceneMail1Message2()
+    self.hidables["SceneMail1Message3"] = SceneMail1Message3()
+    self.hidables["SceneMail1Message4"] = SceneMail1Message4()
+    self.hidables["SceneMail1Message5"] = SceneMail1Message5()
+    self.hidables["SceneRadar1"] = SceneRadar1()
 end
 
 function Terminal:update(dt, cursorX, cursorY)
@@ -42,6 +49,7 @@ function Terminal:mousereleased(cursorX, cursorY)
     for _, currHidable in pairs(self.hidables) do
         if currHidable:isVisible() then
             currHidable:mousereleased(cursorX, cursorY)
+            break
         end
     end
 end
@@ -50,6 +58,14 @@ function Terminal:keypressed(key)
     for _, currHidable in pairs(self.hidables) do
         if currHidable:isVisible() then
             currHidable:keypressed(key)
+        end
+    end
+end
+
+function Terminal:wheelmoved(y)
+    for _, currHidable in pairs(self.hidables) do
+        if currHidable:isVisible() then
+            currHidable:wheelmoved(y)
         end
     end
 end
@@ -82,6 +98,16 @@ end
 
 function Terminal:getHidable(name)
     return self.hidables[name]
+end
+
+function Terminal:getCurrHidable()
+    for _, currHidable in pairs(self.hidables) do
+        if currHidable:isVisible() then
+            return currHidable
+        end
+    end
+
+    return nil
 end
 
 function Terminal:getInvertShader()

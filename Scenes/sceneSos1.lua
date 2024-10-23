@@ -5,8 +5,8 @@ function SceneSos1:new()
     self.desiredIconLength = love.graphics.getHeight() / 10
     self.font = love.graphics.newFont("Fonts/Pinscher.otf", Terminal:getHeight() / 5)
 
-    self.x = Terminal:getX()
-    self.y = Terminal:getY()
+    self.x = 0
+    self.y = 0
     self.xMargin = Terminal:getWidth() / 10
     self.yMargin = Terminal:getHeight() / 10
     self.spaceMargin = Terminal:getWidth() / 20
