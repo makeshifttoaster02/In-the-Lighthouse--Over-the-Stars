@@ -1,7 +1,13 @@
 SceneMail1Message1 = MailMessage:extend()
 
 function SceneMail1Message1:new()
-    local text = [[Hello,
+    local cantReply = true
+    local cantReplyText = "This sender is not accepting replies."
+    local text = [[[URGENT] Generator Repair
+November 21, 2079
+-------------
+    
+Hello,
 
 This is an automated message. 
 
@@ -12,5 +18,5 @@ Please double check that the bearings of the generator are cleaned, lubricated, 
 Thank you, 
 
 IGSM]]
-    SceneMail1Message1.super.new(self, text)
+    SceneMail1Message1.super.new(self, text, cantReply, cantReplyText)
 end

@@ -16,8 +16,8 @@ function SceneMail1:new()
     self.showUpArrow = false
     self.showDownArrow = true
 
-    self.noticeText = "All mail older than five years old will be automatically deleted. Please save and print any important messages."
-    self.noticeFontSize = Terminal:getHeight() / 30
+    self.noticeText = "All mail older than five years old will be automatically deleted.\nPlease save and print any important messages."
+    self.noticeFontSize = Terminal:getHeight() / 20
     self.noticeFont = love.graphics.newFont("Fonts/Pinscher.otf", self.noticeFontSize)
     self.noticeMargin = Terminal:getHeight() / 10
 
@@ -43,7 +43,9 @@ function SceneMail1:update(dt, cursorX, cursorY)
     if self.visible then
         for i = 1, #self.entries do
             local currEntry = self.entries[i]
-            currEntry:markHovering(cursorX, cursorY)
+            if self:withinBox(cursorX, cursorY) then
+                currEntry:markHovering(cursorX, cursorY)
+            end
         end
     end
 end
@@ -80,9 +82,11 @@ function SceneMail1:mousereleased(cursorX, cursorY)
     if self.visible then
         for i = 1, #self.entries do
             local currEntry = self.entries[i]
-            if currEntry:withinBounds(cursorX, cursorY) then
-                currEntry:mousereleased(cursorX, cursorY)
-                break
+            if self:withinBox(cursorX, cursorY) then
+                if currEntry:withinBounds(cursorX, cursorY) then
+                    currEntry:mousereleased(cursorX, cursorY)
+                    break
+                end
             end
         end
     end
@@ -114,4 +118,10 @@ end
 
 function SceneMail1:restoreDefaults()
     -- self.scrollOffset = 0
+end
+
+function SceneMail1:withinBox(cursorX, cursorY)
+    local canvasX = cursorX - Terminal:getX()
+    local canvasY = cursorY - Terminal:getY()
+    return self.boxX <= canvasX and canvasX <= self.boxX + self.boxWidth and self.boxY <= canvasY and canvasY <= self.boxY + self.boxHeight 
 end

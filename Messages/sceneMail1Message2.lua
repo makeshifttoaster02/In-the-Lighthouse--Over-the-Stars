@@ -1,7 +1,13 @@
 SceneMail1Message2 = MailMessage:extend()
 
 function SceneMail1Message2:new()
-    local text = [[Hello,
+    local cantReply = true
+    local cantReplyText = "This sender is not accepting replies."
+    local text = [[[URGENT] Cooling Replace
+November 23, 2079
+-------------
+    
+Hello,
 
 This is an automated message. 
 
@@ -12,5 +18,5 @@ Please double check that all cooling passages are unblocked and replace any nece
 Thank you, 
 
 IGSM]]
-    SceneMail1Message2.super.new(self, text)
+    SceneMail1Message2.super.new(self, text, cantReply, cantReplyText)
 end

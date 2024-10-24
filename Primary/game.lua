@@ -2,7 +2,7 @@ Game = Object:extend()
 
 function Game:load()
     math.randomseed(os.time())
-    TEsound.volume("all", 0.00)
+    TEsound.volume("all", 0.05)
     TEsound.playLooping("Sounds/Ambient 1.mp3", "stream")
 
     Screen:load()

@@ -1,8 +1,10 @@
 MailMessage = Hidable:extend()
 
-function MailMessage:new(text, reply)
+function MailMessage:new(text, reply, cantReply, cantReplyText)
     self.text = text
     self.reply = reply or nil
+    self.cantReply = cantReply
+    self.cantReplyText = cantReplyText
 
     self.fontSize = Terminal:getHeight() / 15
     self.font = love.graphics.newFont("Fonts/Pinscher.otf", self.fontSize)

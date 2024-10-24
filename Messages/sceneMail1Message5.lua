@@ -1,7 +1,13 @@
 SceneMail1Message5 = MailMessage:extend()
 
 function SceneMail1Message5:new()
-    local text = [[Hello,
+    local cantReply = false
+    local cantReplyText = nil
+    local text = [[[URGENT] Debris Spec
+November 28, 2079
+-------------
+    
+Hello,
 
 This is Janice again.
 
@@ -31,5 +37,5 @@ Janice Steele
 Lighthouse Coordinator
 IGSM
 JNCSTL#499093]]
-    SceneMail1Message5.super.new(self, text)
+    SceneMail1Message5.super.new(self, text, cantReply, cantReplyText)
 end
