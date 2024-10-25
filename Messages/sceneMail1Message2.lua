@@ -1,8 +1,9 @@
 SceneMail1Message2 = MailMessage:extend()
 
 function SceneMail1Message2:new()
+    local messageName = "SceneMail1Message2"
     local cantReply = true
-    local cantReplyText = "This sender is not accepting replies."
+    local cantReplyText = "This sender has disabled replies to this message."
     local text = [[[URGENT] Cooling Replace
 November 23, 2079
 -------------
@@ -18,5 +19,5 @@ Please double check that all cooling passages are unblocked and replace any nece
 Thank you, 
 
 IGSM]]
-    SceneMail1Message2.super.new(self, text, cantReply, cantReplyText)
+    SceneMail1Message2.super.new(self, text, cantReply, cantReplyText, messageName)
 end

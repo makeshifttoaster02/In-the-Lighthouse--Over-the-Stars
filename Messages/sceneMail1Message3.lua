@@ -1,6 +1,7 @@
 SceneMail1Message3 = MailMessage:extend()
 
 function SceneMail1Message3:new()
+    local messageName = "SceneMail1Message3"
     local cantReply = true
     local cantReplyText = "This sender has disabled replies to this message."
     local text = [[[URGENT] Debris Notice
@@ -29,5 +30,5 @@ Janice Steele
 Lighthouse Coordinator
 IGSM
 JNCSTL#499093]]
-    SceneMail1Message3.super.new(self, text, cantReply, cantReplyText)
+    SceneMail1Message3.super.new(self, text, cantReply, cantReplyText, messageName)
 end

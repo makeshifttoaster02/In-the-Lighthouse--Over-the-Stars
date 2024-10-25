@@ -5,16 +5,19 @@ function SceneSos1:new()
     self.desiredIconLength = love.graphics.getHeight() / 10
     self.font = love.graphics.newFont("Fonts/Pinscher.otf", Terminal:getHeight() / 5)
 
+    self.questionText = "Send SOS?"
+
     self.x = 0
     self.y = 0
-    self.xMargin = Terminal:getWidth() / 10
-    self.yMargin = Terminal:getHeight() / 10
     self.spaceMargin = Terminal:getWidth() / 20
+    self.xMargin = (Terminal:getWidth() - self.desiredIconLength - self.spaceMargin - self.font:getWidth(self.questionText)) / 2
+    self.yMargin = Terminal:getHeight() / 8
 
     local buttonX = self.x + self.xMargin
     local buttonY = self.y + Terminal:getHeight() - self.yMargin - self.desiredIconLength
     local buttonText = "Yes"
     self.button = SceneSos1Button(buttonX, buttonY, buttonText)
+    self.button:setX((Terminal:getWidth() - self.button:getWidth()) / 2)
 end
 
 function SceneSos1:update(dt, cursorX, cursorY)
@@ -34,7 +37,7 @@ function SceneSos1:draw()
         local textY = self.y + self.yMargin
 
         love.graphics.draw(self.icon, iconX, iconY, 0, iconSx, iconSy)
-        love.graphics.print("Send SOS?", self.font, textX, textY)
+        love.graphics.print(self.questionText, self.font, textX, textY)
         self.button:draw()
     end
 end

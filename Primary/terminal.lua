@@ -4,7 +4,7 @@ function Terminal:load()
     self.terminalWidth = love.graphics.getWidth() * 2.5/5
     self.terminalHeight = love.graphics.getHeight() * 2.5/5
     self.terminalX = love.graphics.getWidth() / 2 - self.terminalWidth / 2
-    self.terminalY = love.graphics.getHeight() / 2 - self.terminalHeight / 2
+    self.terminalY = love.graphics.getHeight() / 2 - self.terminalHeight * 2/3
 
     self.invertShader = love.graphics.newShader(love.filesystem.read("Shaders/convertToBlack.glsl"))
 
@@ -66,6 +66,14 @@ function Terminal:wheelmoved(y)
     for _, currHidable in pairs(self.hidables) do
         if currHidable:isVisible() then
             currHidable:wheelmoved(y)
+        end
+    end
+end
+
+function Terminal:textinput(t)
+    for _, currHidable in pairs(self.hidables) do
+        if currHidable:isVisible() then
+            currHidable:textinput(t)
         end
     end
 end

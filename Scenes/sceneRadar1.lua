@@ -4,6 +4,12 @@ function SceneRadar1:new()
     self.youX = Terminal:getWidth() / 2
     self.youY = Terminal:getHeight() / 2
     self.youRadius = Terminal:getHeight() / 80
+    self.youMargin = Terminal:getHeight() / 80
+    self.youText = "You"
+    self.youFontSize = Terminal:getHeight() / 25
+    self.youFont = love.graphics.newFont("Fonts/Pinscher.otf", self.youFontSize)
+    self.youTextX = self.youX + self.youRadius + self.youMargin
+    self.youTextY = self.youY - self.youRadius - self.youFontSize - self.youMargin
     
     self.radiusUnit = Terminal:getHeight() / 9.6
     self.numCircles = math.ceil(Terminal:getWidth() / self.radiusUnit)
@@ -69,6 +75,7 @@ function SceneRadar1:draw()
         love.graphics.printf(self.youHoverBoxTitle, self.youHoverBoxTitleFont, self.youX + self.youHoverBoxMargin, self.youY + self.youHoverBoxMargin, self.youHoverBoxWidth - 2 * self.margin, "left")
         love.graphics.printf(self.youHoverBoxText, self.youHoverBoxTextFont, self.youX + self.youHoverBoxMargin, self.youY + self.youHoverBoxMargin * 2 + self.youHoverBoxTitleFontSize, self.youHoverBoxWidth - 2 * self.margin, "left")       
     end
+    love.graphics.print(self.youText, self.youFont, self.youTextX, self.youTextY)
     love.graphics.rectangle("line", self.boxX, self.boxY, self.boxWidth - 2, self.boxHeight - 2)
     love.graphics.setScissor()
 end

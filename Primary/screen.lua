@@ -34,6 +34,10 @@ function Screen:wheelmoved(y)
     Terminal:wheelmoved(y)
 end
 
+function Screen:textinput(t)
+    Terminal:textinput(t)
+end
+
 function Screen:getHeight()
     return Terminal:getHeight() + Taskbar:getHeight()
 end

@@ -1,6 +1,7 @@
 Game = Object:extend()
 
 function Game:load()
+    love.keyboard.setKeyRepeat(true)
     math.randomseed(os.time())
     TEsound.volume("all", 0.05)
     TEsound.playLooping("Sounds/Ambient 1.mp3", "stream")
@@ -33,6 +34,10 @@ end
 
 function Game:wheelmoved(y)
     Screen:wheelmoved(y)
+end
+
+function Game:textinput(t)
+    Screen:textinput(t)
 end
 
 function Game:drawScreen()

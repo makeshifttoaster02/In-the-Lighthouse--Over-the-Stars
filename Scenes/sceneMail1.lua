@@ -3,7 +3,7 @@ SceneMail1 = Hidable:extend()
 function SceneMail1:new()
     self.entries = {
         SceneMail1Entry1(),
-        SceneMail1Entry2(),
+        -- SceneMail1Entry2(),
         SceneMail1Entry3(),
         SceneMail1Entry4(),
         SceneMail1Entry5()
@@ -114,6 +114,10 @@ end
 
 function SceneMail1:getScrollOffset()
     return self.scrollOffset
+end
+
+function SceneMail1:resetScrollOffset()
+    self.scrollOffset = 0
 end
 
 function SceneMail1:restoreDefaults()

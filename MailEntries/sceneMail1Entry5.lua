@@ -4,7 +4,7 @@ function SceneMail1Entry5:new()
     local title = "[URGENT] Debris Spec"
     local sender = "Janice"
     local date = "11/28/2079"
-    local index = 5
+    local index = 1
     SceneMail1Entry3.super.new(self, title, sender, date, index)
 end
 

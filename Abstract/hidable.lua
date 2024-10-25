@@ -26,6 +26,9 @@ end
 function Hidable:keypressed(key)
 end
 
+function Hidable:textinput(t)
+end
+
 function Hidable:restoreDefaults()
 
 end

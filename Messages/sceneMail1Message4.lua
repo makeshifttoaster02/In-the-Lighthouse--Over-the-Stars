@@ -1,7 +1,8 @@
 SceneMail1Message4 = MailMessage:extend()
 
 function SceneMail1Message4:new()
-    local cantReply = "False"
+    local messageName = "SceneMail1Message4"
+    local cantReply = false
     local cantReplyText = nil
     local text = [[Call us when you can
 November 27, 2079
@@ -14,5 +15,5 @@ I know you're busy out there and making it to a docking station can be hard, but
 Nana hasn't been feeling super well recently. This was the first Thanksgiving she spent alone. She really misses you.
 
 Gael]]
-    SceneMail1Message4.super.new(self, text, cantReply, cantReplyText)
+    SceneMail1Message4.super.new(self, text, cantReply, cantReplyText, messageName)
 end

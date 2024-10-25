@@ -1,4 +1,6 @@
 require("helpers")
+require("lib.middleclass")
+require("Primary.textinput")
 require("tesound")
 Object = require("classic")
 require("Primary.terminal")
@@ -34,4 +36,8 @@ end
 
 function love.wheelmoved(x, y)
     Game:wheelmoved(y)
+end
+
+function love.textinput(t)
+    Game:textinput(t)
 end

@@ -13,22 +13,19 @@ function BackButton:mousereleased(cursorX, cursorY)
         else
             Terminal:hideAll()
             Terminal:getHidable("Menu"):show()
+            Terminal:getHidable("SceneMail1"):resetScrollOffset()
         end
     end
 end
 
 function BackButton:draw()
     if not Terminal:getHidable("Menu"):isVisible() then
-        love.graphics.setLineWidth(3)
-        love.graphics.rectangle("line", self.x, self.y, self.width, self.height, self.radius)
+        BackButton.super.draw(self)
+    end
+end
 
-        if self.hovering then
-            love.graphics.rectangle("fill", self.x, self.y, self.width, self.height, self.radius)
-            local blackShader = Terminal:getInvertShader()
-            love.graphics.setShader(blackShader)
-        end
-
-        love.graphics.printf(self.text, self.font, self.x, self.y + self.margin, self.width, "center")
-        love.graphics.setShader()
+function BackButton:markHovering(cursorX, cursorY)
+    if not Terminal:getHidable("Menu"):isVisible() then
+        BackButton.super.markHovering(self, cursorX, cursorY)
     end
 end

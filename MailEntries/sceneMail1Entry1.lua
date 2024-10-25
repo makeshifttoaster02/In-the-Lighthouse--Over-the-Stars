@@ -3,8 +3,8 @@ SceneMail1Entry1 = MailEntry:extend()
 function SceneMail1Entry1:new()
     local title = "[URGENT] Generator Repair"
     local sender = "IGSM"
-    local date = "11/21/2079"
-    local index = 1
+    local date = "11/23/2079"
+    local index = 4
     SceneMail1Entry1.super.new(self, title, sender, date, index)
 end
 
