@@ -1,4 +1,5 @@
 require("helpers")
+require("compat")
 require("lib.middleclass")
 require("Primary.textinput")
 require("tesound")
@@ -13,6 +14,7 @@ RequireDirectory("Scenes")
 RequireDirectory("Buttons")
 RequireDirectory("MailEntries")
 RequireDirectory("Messages")
+RequireDirectory("Items")
 
 function love.load()
     Game:load()

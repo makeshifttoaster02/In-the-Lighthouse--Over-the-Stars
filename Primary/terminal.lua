@@ -1,10 +1,10 @@
 Terminal = Object:extend()
 
 function Terminal:load()
-    self.terminalWidth = love.graphics.getWidth() * 2.5/5
-    self.terminalHeight = love.graphics.getHeight() * 2.5/5
+    self.terminalWidth = love.graphics.getWidth() * 2/5
+    self.terminalHeight = love.graphics.getHeight() * 2/5
     self.terminalX = love.graphics.getWidth() / 2 - self.terminalWidth / 2
-    self.terminalY = love.graphics.getHeight() / 2 - self.terminalHeight * 2/3
+    self.terminalY = love.graphics.getHeight() / 2 - self.terminalHeight
 
     self.invertShader = love.graphics.newShader(love.filesystem.read("Shaders/convertToBlack.glsl"))
 

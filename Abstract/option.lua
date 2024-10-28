@@ -49,8 +49,10 @@ function Option:markHovering(cursorX, cursorY)
             TEsound.play("Sounds/Hover.wav", "static")
         end
         self.hovering = true
+        Game:setHandCursor()
     else
         self.hovering = false
+        Game:setDefaultCursor()
     end
 end
 

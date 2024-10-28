@@ -49,3 +49,11 @@ end
 function Screen:getCrtShader()
     return self.crtShader
 end
+
+function Screen:getX()
+    return Terminal:getX()
+end
+
+function Screen:getY()
+    return Terminal:getY()
+end

@@ -54,7 +54,7 @@ function MailMessage:new(text, cantReply, cantReplyText, messageName)
 _____________
 
 Daniel Moreno
-Debris Collector
+Debris Salvager
 Division 3099
 DNLMRN#707605]]
     self.replyBoxInput:setText(self.replySignature)

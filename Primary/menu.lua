@@ -1,7 +1,7 @@
 Menu = Hidable:extend()
 
 function Menu:new()
-    self.options = {OptionProtected(), OptionMail(), OptionComms(), OptionRadar(), OptionSos()}
+    self.options = {OptionProtected(), OptionMail(), OptionRadar(), OptionSos()}
     self:show()
 end
 
