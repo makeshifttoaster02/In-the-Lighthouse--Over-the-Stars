@@ -25,6 +25,14 @@ function Game:update(dt)
     Background:update(dt, cursorX, cursorY)
     Screen:update(dt, cursorX, cursorY)
     DialogueBox:markHovering(cursorX, cursorY)
+    
+    if self.hovering then
+        love.mouse.setCursor(self.handCursor)
+    else
+        love.mouse.setCursor()
+    end
+
+    self.hovering = false
 end
 
 function Game:draw()
@@ -54,12 +62,8 @@ function Game:textinput(t)
     Screen:textinput(t)
 end
 
-function Game:setHandCursor()
-    love.mouse.setCursor(self.handCursor)
-end
-
-function Game:setDefaultCursor()
-    love.mouse.setCursor()
+function Game:setHovering()
+    self.hovering = true
 end
 
 function Game:drawScreen()
