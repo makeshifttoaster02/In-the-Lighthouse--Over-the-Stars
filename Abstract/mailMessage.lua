@@ -72,7 +72,7 @@ DNLMRN#707605]]
     self.sendingTextFont = love.graphics.newFont("Fonts/Pinscher.otf", self.sendingTextFontSize)
     self.sendingDuration = 0.5
     self.currSendingDuration = 0
-    self.failedDuration = math.random(7, 13)
+    self.failedDuration = math.random(4, 8)
     self.currFailedDuration = 0
 end
 
@@ -226,10 +226,10 @@ end
 
 function MailMessage:getMaxScrollOffset()
     if self.replyButton:isVisible() then
-        return self.totalTextHeight + self.replyButton:getHeight() - self.textboxHeight
+        return self.totalTextHeight + self.replyButton:getHeight() - self.textboxHeight + self.cancelMargin
     end
 
-    return self.totalTextHeight + self.replyBoxHeight + self.cancelButton:getHeight() + self.cancelMargin - self.textboxHeight
+    return self.totalTextHeight + self.replyBoxHeight + self.cancelButton:getHeight() + 3 * self.cancelMargin - self.textboxHeight
 end
 
 function MailMessage:setToMaxOffset()
@@ -247,7 +247,7 @@ function MailMessage:deactivateReplyInput()
     self.replyBoxInput:reset()
     self.replyBoxInput:setText(self.replySignature)
     self.sendingText = ""
-    self.failedDuration = math.random(7, 13)
+    self.failedDuration = math.random(4, 8)
     self.currFailedDuration = 0
     self.currSendingDuration = 0
     self.sending = false
@@ -263,5 +263,5 @@ function MailMessage:setSending()
     self.sendingText = "Sending ."
     self.currSendingDuration = 0
     self.currFailedDuration = 0
-    self.failedDuration = math.random(7, 13)
+    self.failedDuration = math.random(4, 8)
 end

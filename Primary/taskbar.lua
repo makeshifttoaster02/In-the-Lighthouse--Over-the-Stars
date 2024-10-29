@@ -11,7 +11,7 @@ function Taskbar:load()
     self.button = BackButton(self.x, self.y + self.buttonVerticalMargin, "Back", self.buttonFontSize)
     self.button:setX(self.x + Terminal:getWidth() - self.button:getWidth() - self.buttonHorizontalMargin)
 
-    self.dateFontSize = Terminal:getHeight() / 15
+    self.dateFontSize = Terminal:getHeight() / 10
     self.dateFont = love.graphics.newFont("Fonts/Pinscher.otf", self.dateFontSize)
     self.dateMargin = love.graphics.getWidth() / 100
 end

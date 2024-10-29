@@ -37,6 +37,12 @@ Universal Coordinates: Failed to Retrieve]]
     self.youHoverBoxWidth = self.youHoverBoxTextFont:getWidth(self.youHoverBoxText) + 2 * self.margin
     self.youHoverBoxHeight = self.youHoverBoxTitleFontSize + 2 * self.youHoverBoxTextFontSize + 3.5 * self.youHoverBoxMargin
     self.youHoverBoxRadius = 3
+
+    self.warningIcon1 = love.graphics.newImage("Icons/Exclamation.png")
+    self.warningX = self.boxX + self.boxWidth / 6
+    self.warningY = self.boxY + self.boxHeight / 6
+    self.warningDesiredLength = Terminal:getHeight() / 25
+    self.warningMargin = Terminal:getHeight() / 50
 end
 
 function SceneRadar1:update(dt, cursorX, cursorY)
@@ -77,6 +83,14 @@ function SceneRadar1:draw()
     end
     love.graphics.print(self.youText, self.youFont, self.youTextX, self.youTextY)
     love.graphics.rectangle("line", self.boxX, self.boxY, self.boxWidth - 2, self.boxHeight - 2)
+
+    local warningSx = self.warningDesiredLength / self.warningIcon1:getWidth()
+    local warningSy = self.warningDesiredLength / self.warningIcon1:getHeight()
+    SetColorHEX("#000000")
+    love.graphics.circle("fill", self.warningX + self.warningDesiredLength / 2, self.warningY + self.warningDesiredLength / 2, self.warningDesiredLength / 2 + self.warningMargin)
+    SetColorHEX("#FFFFFF")
+    love.graphics.circle("line", self.warningX + self.warningDesiredLength / 2, self.warningY + self.warningDesiredLength / 2, self.warningDesiredLength / 2 + self.warningMargin)
+    love.graphics.draw(self.warningIcon1, self.warningX, self.warningY, 0, warningSx, warningSy)
     love.graphics.setScissor()
 end
 

@@ -14,7 +14,7 @@ end
 
 function Screen:draw()
     SetColorHEX("#000000")
-    love.graphics.rectangle("fill", 0, 0, love.graphics.getHeight(), love.graphics.getWidth())
+    love.graphics.rectangle("fill", 0, 0, love.graphics.getWidth(), love.graphics.getHeight())
     SetColorHEX("#FFFFFF")
 
     Terminal:draw()

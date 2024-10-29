@@ -2,7 +2,7 @@ Background = Object:extend()
 
 function Background:load()
     self.drawables = {
-        Computer(),
+        -- Computer(),
         -- Glove1(),
         -- Glove2(),
         -- Helmet()
