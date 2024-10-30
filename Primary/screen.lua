@@ -22,6 +22,7 @@ function Screen:draw()
 end
 
 function Screen:mousereleased(cursorX, cursorY)
+    Background:mousereleased(cursorX, cursorY)
     Terminal:mousereleased(cursorX, cursorY)
     Taskbar:mousereleased(cursorX, cursorY)
 end

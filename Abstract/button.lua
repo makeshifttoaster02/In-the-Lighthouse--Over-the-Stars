@@ -53,13 +53,14 @@ function Button:mousereleased(cursorX, cursorY)
 end
 
 function Button:withinBounds(cursorX, cursorY)
-    local canvasX = cursorX - Terminal:getX()
-    local canvasY = cursorY - Terminal:getY()
-    return self.x <= canvasX and canvasX <= self.x + self.width and self.y <= canvasY and canvasY <= self.y + self.height
+    local buttonCursorX = Terminal:getX() + self.x - Game:getOffset()
+    local buttonCursorY = Terminal:getY() + self.y
+    return buttonCursorX <= cursorX and cursorX <= buttonCursorX + self.width and
+            buttonCursorY <= cursorY and cursorY <= buttonCursorY + self.height
 end
 
 function Button:markHovering(cursorX, cursorY)
-    if self:withinBounds(cursorX, cursorY) then
+    if self:withinBounds(cursorX, cursorY) and not DialogueBox:isVisible() then
         if not self.hovering then
             TEsound.play("Sounds/Hover.wav", "static")
         end

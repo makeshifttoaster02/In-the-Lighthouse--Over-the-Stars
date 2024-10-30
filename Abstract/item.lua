@@ -23,12 +23,19 @@ end
 
 function Item:draw()
     local image = self:getCurrentImage()
-    love.graphics.draw(image, self.imageX, self.imageY, 0, self.imageSx, self.imageSy)
+    if self.hovering then
+        love.graphics.setShader(Game:getWhiteShader())
+        love.graphics.draw(image, self.imageX, self.imageY, 0, self.imageSx, self.imageSy)
+        love.graphics.setShader()
+    else
+        love.graphics.draw(image, self.imageX, self.imageY, 0, self.imageSx, self.imageSy)
+    end
 end
 
 function Item:mousereleased(cursorX, cursorY)
     if self.clickable and self:withinBounds(cursorX, cursorY) then
-        self.dialogueTree:trigger()
+        self.dialogueTree:initialize()
+        self.hovering = false
     end
 end
 
@@ -41,6 +48,17 @@ function Item:getCurrentImage()
 end
 
 function Item:withinBounds(cursorX, cursorY)
-    return self.assetX <= cursorX and cursorX <= self.assetX + self.assetWidth
-            and self.assetY <= cursorY and cursorY <= self.assetY + self.assetHeight
+    local assetCursorX = self.assetX - Game:getOffset()
+    local assetCursorY = self.assetY
+    return assetCursorX <= cursorX and cursorX <= assetCursorX + self.assetWidth
+            and assetCursorY <= cursorY and cursorY <= assetCursorY + self.assetHeight
+end
+
+function Item:markHovering(cursorX, cursorY)
+    if self.clickable and self:withinBounds(cursorX, cursorY) then
+        self.hovering = true
+        Game:setHovering()
+    else
+        self.hovering = false
+    end
 end

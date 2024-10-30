@@ -74,13 +74,14 @@ function MailEntry:draw()
 end
 
 function MailEntry:withinBounds(cursorX, cursorY)
-    local canvasX = cursorX - Terminal:getX()
-    local canvasY = cursorY - Terminal:getY() + Terminal:getHidable("SceneMail1"):getScrollOffset()
-    return self.x <= canvasX and canvasX <= self.x + self.width and self.y <= canvasY and canvasY <= self.y + self.height
+    local entryCursorX = Terminal:getX() + self.x - Game:getOffset()
+    local entryCursorY = Terminal:getY() + self.y - Terminal:getHidable("SceneMail1"):getScrollOffset()
+    return entryCursorX <= cursorX and cursorX <= entryCursorX + self.width and
+            entryCursorY <= cursorY and cursorY <= entryCursorY + self.height
 end
 
 function MailEntry:markHovering(cursorX, cursorY)
-    if self:withinBounds(cursorX, cursorY) then
+    if self:withinBounds(cursorX, cursorY) and not DialogueBox:isVisible() then
         if not self.hovering then
             TEsound.play("Sounds/Hover.wav", "static")
         end

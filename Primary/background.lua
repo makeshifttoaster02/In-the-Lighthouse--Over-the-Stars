@@ -3,9 +3,16 @@ Background = Object:extend()
 function Background:load()
     self.drawables = {
         -- Computer(),
-        -- Glove1(),
-        -- Glove2(),
-        -- Helmet()
+        Glove1(),
+        Glove2(),
+        Window(),
+        Suit(),
+        Door(),
+        Bed(),
+        Shelf(),
+        Rocket(),
+        Leaf(),
+        Helmet()
     }
 
     self.animationIndex = 1
@@ -18,6 +25,12 @@ function Background:update(dt, cursorX, cursorY)
     if self.currAnimationDuration >= self.animationDuration then
         self.currAnimationDuration = 0
         self.animationIndex = self.animationIndex + 1
+    end
+
+    for _, currDrawable in pairs(self.drawables) do
+        if not DialogueBox:isVisible() then
+            currDrawable:markHovering(cursorX, cursorY)
+        end
     end
 end
 

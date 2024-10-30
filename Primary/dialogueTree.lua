@@ -7,6 +7,7 @@ end
 
 function DialogueTree:trigger()
     self.dialogueIndex = self.dialogueIndex + 1
+    DialogueBox:reset()
     if self.dialogueIndex > #self.dialogueList then
         self.dialogueIndex = 0
         DialogueBox:setDialogueTree(nil)
@@ -18,4 +19,9 @@ function DialogueTree:trigger()
         DialogueBox:setDialogue(currDialogue)
         DialogueBox:show()
     end
+end
+
+function DialogueTree:initialize()
+    self.dialogueIndex = 0
+    self:trigger()
 end

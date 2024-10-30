@@ -18,11 +18,34 @@ function DialogueBox:load()
     self.boxFontSize = self.boxHeight / 10
     self.boxFont = love.graphics.newFont("Fonts/Pinscher.otf", self.boxFontSize)
     self.boxRadius = 10
+
+    self.currDialogueSubstr = ""
+    self.currDialogueIndex = 0
+    self.characterDuration = 0.05
+    self.currCharacterDuration = 0
+end
+
+function DialogueBox:update(dt, cursorX, cursorY)
+    if self.visible then
+        if self.currDialogueSubstr ~= self.currDialogue then
+            self.currDialogueIndex = self.currDialogueIndex + 1
+            self.currCharacterDuration = self.currCharacterDuration + dt
+            if self.currCharacterDuration >= self.characterDuration then
+                self.currCharacterDuration = 0
+                self.currDialogueSubstr = string.sub(self.currDialogue, 1, self.currDialogueIndex)
+                TEsound.stop("Daniel")
+                TEsound.play("Sounds/Daniel.mp3", "static", "Daniel", 4)
+            end
+        end
+    end
 end
 
 function DialogueBox:draw()
     if self.visible then
+        SetColorHEX("#000000")
+        love.graphics.rectangle("fill", self.boxX, self.boxY, self.boxWidth, self.boxHeight, self.boxRadius)
         love.graphics.setLineWidth(3)
+        SetColorHEX("#FFFFFF")
         love.graphics.rectangle("line", self.boxX, self.boxY, self.boxWidth, self.boxHeight, self.boxRadius)
 
         if self.hovering then
@@ -34,7 +57,7 @@ function DialogueBox:draw()
         local dialogueX = self.boxX + self.innerBoxXMargin
         local dialogueY = self.boxY + self.innerBoxYMargin
         local dialogueWidth = self.boxWidth - 2 * self.innerBoxXMargin
-        love.graphics.printf(self.currDialogue, self.boxFont, dialogueX, dialogueY, dialogueWidth, "left")
+        love.graphics.printf(self.currDialogueSubstr, self.boxFont, dialogueX, dialogueY, dialogueWidth, "left")
 
         love.graphics.setShader()
     end
@@ -49,15 +72,21 @@ end
 function DialogueBox:markHovering(cursorX, cursorY)
     if self.visible then
         if self:withinBounds(cursorX, cursorY) then
-            if not self.hovering then
-                TEsound.play("Sounds/Hover.wav", "static")
-            end
+            -- if not self.hovering then
+            --     TEsound.play("Sounds/Hover.wav", "static")
+            -- end
             self.hovering = true
             Game:setHovering()
         else
             self.hovering = false
         end
     end
+end
+
+function DialogueBox:reset()
+    self.currDialogueSubstr = ""
+    self.currDialogueIndex = 0
+    self.currCharacterDuration = 0
 end
 
 function DialogueBox:withinBounds(cursorX, cursorY)
