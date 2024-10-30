@@ -3,16 +3,16 @@ Background = Object:extend()
 function Background:load()
     self.drawables = {
         -- Computer(),
-        Glove1(),
-        Glove2(),
-        Window(),
-        Suit(),
-        Door(),
-        Bed(),
-        Shelf(),
-        Rocket(),
-        Leaf(),
-        Helmet()
+        ["Glove1"] = Glove1(),
+        ["Glove2"] = Glove2(),
+        ["Window"] = Window(),
+        ["Suit"] = Suit(),
+        ["Door"] = Door(),
+        ["Bed"] = Bed(),
+        ["Shelf"] = Shelf(),
+        ["Rocket"] = Rocket(),
+        ["Leaf"] = Leaf(),
+        ["Helmet"] = Helmet()
     }
 
     self.animationIndex = 1
@@ -48,4 +48,10 @@ end
 
 function Background:getAnimationIndex()
     return self.animationIndex
+end
+
+function Background:freshenDrawables(toFreshen)
+    for _, drawableName in ipairs(toFreshen) do
+        self.drawables[drawableName]:freshen()
+    end
 end

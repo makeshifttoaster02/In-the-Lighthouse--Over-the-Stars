@@ -15,6 +15,8 @@ function Item:new(images, imageX, imageY, clickable, assetX, assetY, assetWidth,
     self.assetHeight = assetHeight
 
     self.dialogueTree = dialogueTree
+
+    self.fresh = true
 end
 
 function Item:update(dt, cursorX, cursorY)
@@ -23,19 +25,23 @@ end
 
 function Item:draw()
     local image = self:getCurrentImage()
+    if not self.fresh or not self.clickable then
+        love.graphics.setShader(Game:getGrayShader())
+    end
     if self.hovering then
         love.graphics.setShader(Game:getWhiteShader())
         love.graphics.draw(image, self.imageX, self.imageY, 0, self.imageSx, self.imageSy)
-        love.graphics.setShader()
     else
         love.graphics.draw(image, self.imageX, self.imageY, 0, self.imageSx, self.imageSy)
     end
+    love.graphics.setShader()
 end
 
 function Item:mousereleased(cursorX, cursorY)
     if self.clickable and self:withinBounds(cursorX, cursorY) then
         self.dialogueTree:initialize()
         self.hovering = false
+        self.fresh = false
     end
 end
 
@@ -61,4 +67,16 @@ function Item:markHovering(cursorX, cursorY)
     else
         self.hovering = false
     end
+end
+
+function Item:freshen()
+    self.fresh = true
+end
+
+function Item:unfreshen()
+    self.fresh = false
+end
+
+function Item:isFresh()
+    return self.fresh
 end

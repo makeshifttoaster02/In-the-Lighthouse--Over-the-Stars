@@ -8,17 +8,25 @@ function Game:load()
     TEsound.volume("all", 0.05)
     TEsound.playLooping("Sounds/Ambient 1.mp3", "stream")
 
+    self.start = true
+    self.debug = true
+
     self.offset = 0
     self.handCursor = love.mouse.getSystemCursor("hand")
+
+    DayManager:load()
 
     Screen:load()
     self.screenCanvas = love.graphics.newCanvas(Screen:getWidth(), Screen:getHeight())
     self.backgroundCanvas = love.graphics.newCanvas(love.graphics.getWidth() * 3, love.graphics.getHeight())
 
+    self.grayShader = love.graphics.newShader(love.filesystem.read("Shaders/convertToGray.glsl"))
     self.whiteShader = love.graphics.newShader(love.filesystem.read("Shaders/convertToWhite.glsl"))
     Background:load()
 
     DialogueBox:load()
+
+    DayManager:setDay(1)
 end
 
 function Game:update(dt)
@@ -29,6 +37,11 @@ function Game:update(dt)
     Screen:update(dt, cursorX, cursorY)
     DialogueBox:update(dt, cursorX, cursorY)
     DialogueBox:markHovering(cursorX, cursorY)
+    DayManager:update(dt)
+
+    for _, card in ipairs(ChapterCards) do
+        card:update(dt)
+    end
     
     if self.hovering then
         love.mouse.setCursor(self.handCursor)
@@ -43,6 +56,22 @@ function Game:draw()
     self:drawBackground()
     self:drawScreen()
     DialogueBox:draw()
+
+    if self.start then
+        SetColorHEX("#000000")
+        love.graphics.rectangle("fill", 0, 0, love.graphics.getWidth(), love.graphics.getHeight())
+        SetColorHEX("#FFFFFF")
+    end
+
+    for day, card in ipairs(ChapterCards) do
+        if DayManager:getDay() == day then
+            card:draw()
+        end
+    end
+
+    if self.debug then
+        love.graphics.print(DayManager:getDay(), 0, 0)
+    end
 end
 
 function Game:mousereleased(cursorX, cursorY, button)
@@ -63,6 +92,12 @@ function Game:keypressed(key)
         self.offset = math.max(self.offset - love.graphics.getWidth() / 50, - love.graphics.getWidth() / 2)
     elseif key == "right" then
         self.offset = math.min(self.offset + love.graphics.getWidth() / 50, love.graphics.getWidth() / 2)
+    end
+
+    if self.debug then
+        if key >= "1" and key <= "6" then
+            DayManager:setDay(tonumber(key))
+        end
     end
 end
 
@@ -106,6 +141,18 @@ function Game:getWhiteShader()
     return self.whiteShader
 end
 
+function Game:getGrayShader()
+    return self.grayShader
+end
+
 function Game:getOffset()
     return self.offset
+end
+
+function Game:removeStart()
+    self.start = false
+end
+
+function Game:setOffset(offset)
+    self.offset = offset
 end

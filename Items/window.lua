@@ -20,7 +20,49 @@ function Window:new()
     local assetHeight = unscaledAssetHeight * imageSy
 
     local dialogueTree = DialogueTree(
-        {{"Daniel", "Outside the window, debris intermingles with the stars."}}
+        {
+            [1] =
+
+            {
+                {"Daniel", "Outside the window, debris intermingles with the stars."}
+            },
+
+            [2] =
+
+            {
+                {"Daniel", "I used to grow frustrated when I'd peek out the window and see debris floating around."},
+                {"Daniel", "There's no aerodynamic drag in space, so all sorts of junk can end up on the far outreaches of the universe.\n\nThen it crashes into our satelites and lighthouses, creating more debris and making a mess."},
+                {"Daniel", "People really just throw away weird stuff and dump all their trash in space without thinking about the people who have to clean it up."},
+                {"Daniel", "Although, to be fair, people do that back on Earth, too. Some things never change."},
+            },
+
+            [3] =
+
+            {
+                {"Daniel", "Gael once asked when I decided I wanted to work in space."},
+                {"Daniel", "I told him the story.\n\n\"It was during Ms. Iselda's class, on the school trip to the moon. I was in the rocket on the way over, looking at the world from the window.\""},
+                {"Daniel", "\"I just started crying. I cried and cried and cried. I wondered to myself, 'Why are there divisions between us? Why did it have to be this way?' \""},
+                {"Daniel", "\"From up here, you can't see any borders. All you can see is Earth.\""},
+            },
+
+            [4] =
+
+            {
+                {"Daniel", "Outside the window, debris intermingles with the stars."}
+            },
+
+            [5] =
+
+            {
+                {"Daniel", "Outside the window, debris intermingles with the stars. White streaks of light fill the void."}
+            },
+
+            [6] =
+
+            {
+                {"Daniel", "Outside the window, debris intermingles with the stars. White streaks of light fill the void."}
+            },
+        }
     )
 
     Window.super.new(self, images, imageX, imageY, clickable, assetX, assetY, assetWidth, assetHeight, dialogueTree)

@@ -20,10 +20,49 @@ function Door:new()
     local assetHeight = unscaledAssetHeight * imageSy
 
     local dialogueTree = DialogueTree(
-        {{"Daniel", "Door to the cosmos."},
-         {"Daniel", "I'd love to go out, stretch my legs, and see the stars some time."},
-         {"Daniel", "But opening this door would depressurize the lighthouse."},
-         {"Daniel", "I don't want to take any chances."}}
+        {
+            [1] =
+
+            {
+                {"Daniel", "Door to the cosmos."},
+                {"Daniel", "I'd love to go out, stretch my legs, and see the stars some time, but opening this door would depressurize the lighthouse."},
+                {"Daniel", "I don't want to take any chances."}
+            },
+
+            [2] =
+
+            {
+                {"Daniel", "Door to the cosmos."},
+                {"Daniel", "I'd love to go out, stretch my legs, and see the stars some time, but opening this door would depressurize the lighthouse."},
+                {"Daniel", "I don't want to take any chances."}
+            },
+
+            [3] =
+
+            {
+                {"Daniel", "Door to the cosmos."},
+                {"Daniel", "I'd love to go out, stretch my legs, and see the stars some time, but opening this door would depressurize the lighthouse."},
+                {"Daniel", "I don't want to take any chances."}
+            },
+
+            [4] =
+
+            {
+                {"Daniel", "Door to the cosmos."},
+            },
+
+            [5] =
+
+            {
+                {"Daniel", "Door to the cosmos."},
+            },
+
+            [6] =
+
+            {
+                {"Daniel", "Door to the cosmos."},
+            },
+        }
     )
 
     Door.super.new(self, images, imageX, imageY, clickable, assetX, assetY, assetWidth, assetHeight, dialogueTree)

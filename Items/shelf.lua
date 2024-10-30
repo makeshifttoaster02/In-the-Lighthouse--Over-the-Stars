@@ -20,7 +20,43 @@ function Shelf:new()
     local assetHeight = unscaledAssetHeight * imageSy
 
     local dialogueTree = DialogueTree(
-        {{"Daniel", ""}}
+        {
+            [1] =
+
+            {
+                {"Daniel", ""}
+            },
+
+            [2] =
+
+            {
+                {"Daniel", ""}
+            },
+
+            [3] =
+
+            {
+                {"Daniel", ""}
+            },
+
+            [4] =
+
+            {
+                {"Daniel", ""}
+            },
+
+            [5] =
+
+            {
+                {"Daniel", ""}
+            },
+
+            [6] =
+
+            {
+                {"Daniel", ""}
+            },
+        }
     )
 
     Shelf.super.new(self, images, imageX, imageY, clickable, assetX, assetY, assetWidth, assetHeight, dialogueTree)

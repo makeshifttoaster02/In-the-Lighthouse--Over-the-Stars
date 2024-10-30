@@ -20,7 +20,43 @@ function Glove1:new()
     local assetHeight = unscaledAssetHeight * imageSy
 
     local dialogueTree = DialogueTree(
-        {{"Daniel", "The right glove for the right hand."}}
+        {
+            [1] =
+
+            {
+                {"Daniel", "The right glove for the right hand."}
+            },
+
+            [2] =
+
+            {
+                {"Daniel", "The right glove for the right hand."}
+            },
+
+            [3] =
+
+            {
+                {"Daniel", "The right glove for the right hand."}
+            },
+
+            [4] =
+
+            {
+                {"Daniel", "The right glove for the right hand."}
+            },
+
+            [5] =
+
+            {
+                {"Daniel", "The right glove for the right hand."}
+            },
+
+            [6] =
+
+            {
+                {"Daniel", "The right glove for the right hand."}
+            },
+        }
     )
 
     Glove1.super.new(self, images, imageX, imageY, clickable, assetX, assetY, assetWidth, assetHeight, dialogueTree)

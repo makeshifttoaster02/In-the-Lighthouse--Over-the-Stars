@@ -20,7 +20,46 @@ function Glove2:new()
     local assetHeight = unscaledAssetHeight * imageSy
 
     local dialogueTree = DialogueTree(
-        {{"Daniel", "The wrong glove for the left hand."}}
+        {
+            [1] =
+
+            {
+                {"Daniel", "The wrong glove for the left hand."}
+            },
+
+            [2] =
+
+            {
+                {"Daniel", "The wrong glove for the left hand."}
+            },
+              
+            [3] =
+
+            {
+                {"Daniel", "The wrong glove for the left hand."}
+            },
+
+              
+            [4] =
+
+            {
+                {"Daniel", "The wrong glove for the left hand."}
+            },
+
+              
+            [5] =
+
+            {
+                {"Daniel", "The wrong glove for the left hand."}
+            },
+
+              
+            [6] =
+
+            {
+                {"Daniel", "The wrong glove for the left hand."}
+            },
+        }
     )
 
     -- local dialogueTree = DialogueTree({

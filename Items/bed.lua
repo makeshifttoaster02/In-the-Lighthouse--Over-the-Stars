@@ -20,8 +20,26 @@ function Bed:new()
     local assetHeight = unscaledAssetHeight * imageSy
 
     local dialogueTree = DialogueTree(
-        {{"Daniel", "Go to sleep?"}}
+        {
+            [1] =
+
+            {
+                {"Daniel", "Go to sleep?"}
+            }
+        }
     )
 
+    -- self.decision = BedDecision()
+
     Bed.super.new(self, images, imageX, imageY, clickable, assetX, assetY, assetWidth, assetHeight, dialogueTree)
+end
+
+function Bed:mousereleased(cursorX, cursorY)
+    if DayManager:getDay() ~= 6 then
+        DayManager:setDay(DayManager:getDay() + 1)
+    end
+    -- if self:withinBounds(cursorX, cursorY) then
+    --     self.fresh = true
+    --     self.decision:show()
+    -- end
 end

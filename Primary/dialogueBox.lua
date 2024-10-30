@@ -21,19 +21,38 @@ function DialogueBox:load()
 
     self.currDialogueSubstr = ""
     self.currDialogueIndex = 0
-    self.characterDuration = 0.05
+    self.characterDuration = 0.03
     self.currCharacterDuration = 0
 end
 
 function DialogueBox:update(dt, cursorX, cursorY)
     if self.visible then
         if self.currDialogueSubstr ~= self.currDialogue then
-            self.currDialogueIndex = self.currDialogueIndex + 1
             self.currCharacterDuration = self.currCharacterDuration + dt
             if self.currCharacterDuration >= self.characterDuration then
+                self.currDialogueIndex = self.currDialogueIndex + 1
                 self.currCharacterDuration = 0
-                self.currDialogueSubstr = string.sub(self.currDialogue, 1, self.currDialogueIndex)
-                TEsound.stop("Daniel")
+
+                local character = self.currDialogue:sub(self.currDialogueIndex, self.currDialogueIndex)
+                self.currDialogueSubstr = self.currDialogueSubstr .. character
+                if character == "," or character == "-" then
+                    self.characterDuration = 0.06
+                elseif character == "." or character == "?" then
+                    self.characterDuration = 0.12
+                elseif character == "\n" then
+                    self.characterDuration = 0.045
+                else
+                    self.characterDuration = 0.03
+                end
+
+                if self.currDialogueIndex ~= string.len(self.currDialogue) then
+                    local puncQuotSubstr = self.currDialogue:sub(self.currDialogueIndex, self.currDialogueIndex + 1)
+                    if puncQuotSubstr == ".\"" or puncQuotSubstr == "?\"" then
+                        self.characterDuration = 0.03
+                    end
+                end
+
+                -- TEsound.stop("Daniel")
                 TEsound.play("Sounds/Daniel.mp3", "static", "Daniel", 4)
             end
         end
