@@ -4,14 +4,14 @@ function ChapterCard:new(number, title)
     self.number = number
     self.title = title
     self.opacity = 0
-    self.fadeSpeed = 2
+    self.fadeSpeed = 1 / 2
     self.fadingIn = false
 
     self.numberFontSize = love.graphics.getHeight() / 20
     self.titleFontSize = love.graphics.getHeight() / 10
 
     self.chapterFont = love.graphics.newFont("Fonts/Sunday Work.otf", self.numberFontSize)
-    self.chapterText = "Chapter " .. self.number
+    self.chapterText = "Part " .. self.number
 
     self.titleFont = love.graphics.newFont("Fonts/Sunday Work.otf", self.titleFontSize)
 end

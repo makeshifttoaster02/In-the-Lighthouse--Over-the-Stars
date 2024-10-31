@@ -26,3 +26,9 @@ function DialogueTree:initialize()
     self.dialogueIndex = 0
     self:trigger()
 end
+
+function DialogueTree:escape()
+    local currDialogueChain = self.dialogueList[DayManager:getDay()]
+    self.dialogueIndex = #currDialogueChain
+    self:trigger()
+end

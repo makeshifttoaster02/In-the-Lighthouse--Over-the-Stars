@@ -35,8 +35,11 @@ function Background:update(dt, cursorX, cursorY)
 end
 
 function Background:draw()
-    for _, currDrawable in pairs(self.drawables) do
-        currDrawable:draw()
+    self.drawables["Shelf"]:draw()
+    for currDrawableName, currDrawable in pairs(self.drawables) do
+        if currDrawableName ~= "Shelf" then
+            currDrawable:draw()
+        end
     end
 end
 

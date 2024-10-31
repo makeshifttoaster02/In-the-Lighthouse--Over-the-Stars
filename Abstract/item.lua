@@ -30,6 +30,9 @@ function Item:draw()
     end
     if self.hovering then
         love.graphics.setShader(Game:getWhiteShader())
+        if not self.fresh then
+            love.graphics.setShader(Game:getLightGrayShader())
+        end
         love.graphics.draw(image, self.imageX, self.imageY, 0, self.imageSx, self.imageSy)
     else
         love.graphics.draw(image, self.imageX, self.imageY, 0, self.imageSx, self.imageSy)
@@ -54,7 +57,7 @@ function Item:getCurrentImage()
 end
 
 function Item:withinBounds(cursorX, cursorY)
-    local assetCursorX = self.assetX - Game:getOffset()
+    local assetCursorX = self.assetX - OffsetManager:getOffset()
     local assetCursorY = self.assetY
     return assetCursorX <= cursorX and cursorX <= assetCursorX + self.assetWidth
             and assetCursorY <= cursorY and cursorY <= assetCursorY + self.assetHeight

@@ -265,3 +265,7 @@ function MailMessage:setSending()
     self.currFailedDuration = 0
     self.failedDuration = math.random(4, 8)
 end
+
+function MailMessage:isReplyInputActive()
+    return self.replyInputActive
+end

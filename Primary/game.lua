@@ -5,21 +5,23 @@ function Game:load()
 
     math.randomseed(os.time())
 
-    TEsound.volume("all", 0.05)
-    TEsound.playLooping("Sounds/Ambient 1.mp3", "stream", "music")
-
     self.start = true
-    self.debug = false
+    self.debug = true
 
-    self.offset = 0
     self.handCursor = love.mouse.getSystemCursor("hand")
 
+    OffsetManager:load()
     DayManager:load()
+    CardManager:load()
+    SongManager:load()
 
     Screen:load()
     self.screenCanvas = love.graphics.newCanvas(Screen:getWidth(), Screen:getHeight())
     self.backgroundCanvas = love.graphics.newCanvas(love.graphics.getWidth() * 3, love.graphics.getHeight())
 
+    self.redShader = love.graphics.newShader(love.filesystem.read("Shaders/convertToRed.glsl"))
+    self.yellowShader = love.graphics.newShader(love.filesystem.read("Shaders/convertToYellow.glsl"))
+    self.lightGrayShader = love.graphics.newShader(love.filesystem.read("Shaders/convertToLightGray.glsl"))
     self.grayShader = love.graphics.newShader(love.filesystem.read("Shaders/convertToGray.glsl"))
     self.whiteShader = love.graphics.newShader(love.filesystem.read("Shaders/convertToWhite.glsl"))
     Background:load()
@@ -37,19 +39,17 @@ function Game:update(dt)
     Screen:update(dt, cursorX, cursorY)
     DialogueBox:update(dt, cursorX, cursorY)
     DialogueBox:markHovering(cursorX, cursorY)
-    DayManager:update(dt)
 
-    for _, card in ipairs(ChapterCards) do
-        card:update(dt)
-    end
-    
+    DayManager:update(dt)
+    OffsetManager:update(dt, cursorX, cursorY)
+    CardManager:update(dt)
+    SongManager:update(dt)
+
     if self.hovering then
         love.mouse.setCursor(self.handCursor)
     else
         love.mouse.setCursor()
     end
-
-    self:moveOffset(cursorX)
 
     self.hovering = false
 end
@@ -65,12 +65,7 @@ function Game:draw()
         SetColorHEX("#FFFFFF")
     end
 
-    for day, card in ipairs(ChapterCards) do
-        if DayManager:getDay() == day then
-            card:draw()
-            break
-        end
-    end
+    CardManager:draw()
 
     if self.debug then
         love.graphics.print(DayManager:getDay(), 0, 0)
@@ -78,7 +73,7 @@ function Game:draw()
 end
 
 function Game:mousereleased(cursorX, cursorY, button)
-    if not ChapterCards:hasActive() then
+    if not CardManager:hasSemiActive() then
         local leftMouseClick = 1
         if button == leftMouseClick then
             if DialogueBox:isVisible() then
@@ -92,15 +87,9 @@ function Game:mousereleased(cursorX, cursorY, button)
 end
 
 function Game:keypressed(key)
-    if not ChapterCards:hasActive() then
+    if not CardManager:hasSemiActive() then
         Screen:keypressed(key)
-        if key == "left" then
-            self:decrementOffset(love.graphics.getWidth() / 50)
-            self.offset = math.max(self.offset - love.graphics.getWidth() / 50, - love.graphics.getWidth() / 2)
-        elseif key == "right" then
-            self:incrementOffset(love.graphics.getWidth() / 50)
-            self.offset = math.min(self.offset + love.graphics.getWidth() / 50, love.graphics.getWidth() / 2)
-        end
+        OffsetManager:keypressed(key)
 
         if self.debug then
             if key >= "1" and key <= "6" then
@@ -131,7 +120,7 @@ function Game:drawScreen()
     love.graphics.setCanvas()
 
     love.graphics.setShader(Screen:getCrtShader())
-    love.graphics.draw(self.screenCanvas, Terminal:getX() - self.offset, Terminal:getY(), 0, 1, 1)
+    love.graphics.draw(self.screenCanvas, Terminal:getX() - OffsetManager:getOffset(), Terminal:getY(), 0, 1, 1)
 
     love.graphics.setShader()
 end
@@ -143,41 +132,29 @@ function Game:drawBackground()
     Background:draw()
 
     love.graphics.setCanvas()
-    love.graphics.draw(self.backgroundCanvas, - love.graphics.getWidth() - self.offset, 0, 0, 1, 1)
+    love.graphics.draw(self.backgroundCanvas, - love.graphics.getWidth() - OffsetManager:getOffset(), 0, 0, 1, 1)
+end
+
+function Game:getRedShader()
+    return self.redShader
+end
+
+function Game:getYellowShader()
+    return self.yellowShader
 end
 
 function Game:getWhiteShader()
     return self.whiteShader
 end
 
+function Game:getLightGrayShader()
+    return self.lightGrayShader
+end
+
 function Game:getGrayShader()
     return self.grayShader
 end
 
-function Game:getOffset()
-    return self.offset
-end
-
 function Game:removeStart()
     self.start = false
-end
-
-function Game:setOffset(offset)
-    self.offset = offset
-end
-
-function Game:moveOffset(cursorX)
-    if cursorX <= love.graphics.getWidth() / 30 then
-        self:decrementOffset(love.graphics.getWidth() / 100)
-    elseif cursorX >= love.graphics.getWidth() * (1 - 1 / 30) then
-        self:incrementOffset(love.graphics.getWidth() / 100)
-    end
-end
-
-function Game:decrementOffset(decrease)
-    self.offset = math.max(self.offset - decrease, - love.graphics.getWidth() / 2)
-end
-
-function Game:incrementOffset(increase)
-    self.offset = math.min(self.offset + increase, love.graphics.getWidth() / 2)
 end

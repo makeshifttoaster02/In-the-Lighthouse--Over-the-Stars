@@ -45,7 +45,7 @@ end
 
 function Option:markHovering(cursorX, cursorY)
     if self:withinBounds(cursorX, cursorY) and not DialogueBox:isVisible() then
-        if not self.hovering then
+        if not self.hovering and not CardManager:hasActive() then
             TEsound.play("Sounds/Hover.wav", "static")
         end
         self.hovering = true
@@ -56,7 +56,7 @@ function Option:markHovering(cursorX, cursorY)
 end
 
 function Option:withinBounds(cursorX, cursorY)
-    local terminalCursorX = Terminal:getX() + self.x - Game:getOffset()
+    local terminalCursorX = Terminal:getX() + self.x - OffsetManager:getOffset()
     local terminalCursorY = Terminal:getY() + self.y
     return terminalCursorX <= cursorX and cursorX <= terminalCursorX + self.optionWidth and
             terminalCursorY <= cursorY and cursorY <= terminalCursorY + self.optionHeight

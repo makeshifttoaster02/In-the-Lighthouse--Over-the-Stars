@@ -49,11 +49,11 @@ function Button:draw()
 end
 
 function Button:mousereleased(cursorX, cursorY)
-    love.errorhandler("Called Button:mousereleased from Abstract Button")
+    -- love.errorhandler("Called Button:mousereleased from Abstract Button")
 end
 
 function Button:withinBounds(cursorX, cursorY)
-    local buttonCursorX = Terminal:getX() + self.x - Game:getOffset()
+    local buttonCursorX = Terminal:getX() + self.x - OffsetManager:getOffset()
     local buttonCursorY = Terminal:getY() + self.y
     return buttonCursorX <= cursorX and cursorX <= buttonCursorX + self.width and
             buttonCursorY <= cursorY and cursorY <= buttonCursorY + self.height

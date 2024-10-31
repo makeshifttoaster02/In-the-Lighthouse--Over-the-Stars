@@ -16,6 +16,7 @@ RequireDirectory("MailEntries")
 RequireDirectory("Messages")
 RequireDirectory("Items")
 RequireDirectory("Decisions")
+RequireDirectory("Managers")
 
 function love.load()
     Game:load()

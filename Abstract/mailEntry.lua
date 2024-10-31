@@ -74,7 +74,7 @@ function MailEntry:draw()
 end
 
 function MailEntry:withinBounds(cursorX, cursorY)
-    local entryCursorX = Terminal:getX() + self.x - Game:getOffset()
+    local entryCursorX = Terminal:getX() + self.x - OffsetManager:getOffset()
     local entryCursorY = Terminal:getY() + self.y - Terminal:getHidable("SceneMail1"):getScrollOffset()
     return entryCursorX <= cursorX and cursorX <= entryCursorX + self.width and
             entryCursorY <= cursorY and cursorY <= entryCursorY + self.height

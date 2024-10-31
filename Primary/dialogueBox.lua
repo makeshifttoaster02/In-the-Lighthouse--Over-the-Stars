@@ -21,7 +21,7 @@ function DialogueBox:load()
 
     self.currDialogueSubstr = ""
     self.currDialogueIndex = 0
-    self.characterDuration = 0.03
+    self.characterDuration = 0.025
     self.currCharacterDuration = 0
 end
 
@@ -36,13 +36,11 @@ function DialogueBox:update(dt, cursorX, cursorY)
                 local character = self.currDialogue:sub(self.currDialogueIndex, self.currDialogueIndex)
                 self.currDialogueSubstr = self.currDialogueSubstr .. character
                 if character == "," or character == "-" then
-                    self.characterDuration = 0.06
-                elseif character == "." or character == "?" then
                     self.characterDuration = 0.12
-                elseif character == "\n" then
-                    self.characterDuration = 0.045
+                elseif character == "." or character == "?" then
+                    self.characterDuration = 0.18
                 else
-                    self.characterDuration = 0.03
+                    self.characterDuration = 0.025
                 end
 
                 if self.currDialogueIndex ~= string.len(self.currDialogue) then
@@ -83,8 +81,14 @@ function DialogueBox:draw()
 end
 
 function DialogueBox:mousereleased(cursorX, cursorY)
-    if self.visible and self:withinBounds(cursorX, cursorY) then
+    if self.visible and self:withinBounds(cursorX, cursorY) and string.len(self.currDialogueSubstr) > 2 / 3 * string.len(self.currDialogue) then
         self.currDialogueTree:trigger()
+    end
+end
+
+function DialogueBox:keypressed(key)
+    if self.visible and key == "escape" then
+        DialogueTree:escape()
     end
 end
 
