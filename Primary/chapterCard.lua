@@ -44,3 +44,7 @@ end
 function ChapterCard:isFadingIn()
     return self.fadingIn
 end
+
+function ChapterCard:getOpacity()
+    return self.opacity
+end

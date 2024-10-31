@@ -35,8 +35,8 @@ function Bed:new()
 end
 
 function Bed:mousereleased(cursorX, cursorY)
-    if DayManager:getDay() ~= 6 then
-        DayManager:setDay(DayManager:getDay() + 1)
+    if self:withinBounds(cursorX, cursorY) and DayManager:getDay() ~= 6 then
+        DayManager:nextDay()
     end
     -- if self:withinBounds(cursorX, cursorY) then
     --     self.fresh = true

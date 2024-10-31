@@ -6,10 +6,10 @@ function Game:load()
     math.randomseed(os.time())
 
     TEsound.volume("all", 0.05)
-    TEsound.playLooping("Sounds/Ambient 1.mp3", "stream")
+    TEsound.playLooping("Sounds/Ambient 1.mp3", "stream", "music")
 
     self.start = true
-    self.debug = true
+    self.debug = false
 
     self.offset = 0
     self.handCursor = love.mouse.getSystemCursor("hand")
@@ -49,6 +49,8 @@ function Game:update(dt)
         love.mouse.setCursor()
     end
 
+    self:moveOffset(cursorX)
+
     self.hovering = false
 end
 
@@ -66,6 +68,7 @@ function Game:draw()
     for day, card in ipairs(ChapterCards) do
         if DayManager:getDay() == day then
             card:draw()
+            break
         end
     end
 
@@ -75,28 +78,34 @@ function Game:draw()
 end
 
 function Game:mousereleased(cursorX, cursorY, button)
-    local leftMouseClick = 1
-    if button == leftMouseClick then
-        if DialogueBox:isVisible() then
-            DialogueBox:mousereleased(cursorX, cursorY)
-        else
-            Background:mousereleased(cursorX, cursorY)
-            Screen:mousereleased(cursorX, cursorY)
+    if not ChapterCards:hasActive() then
+        local leftMouseClick = 1
+        if button == leftMouseClick then
+            if DialogueBox:isVisible() then
+                DialogueBox:mousereleased(cursorX, cursorY)
+            else
+                Background:mousereleased(cursorX, cursorY)
+                Screen:mousereleased(cursorX, cursorY)
+            end
         end
     end
 end
 
 function Game:keypressed(key)
-    Screen:keypressed(key)
-    if key == "left" then
-        self.offset = math.max(self.offset - love.graphics.getWidth() / 50, - love.graphics.getWidth() / 2)
-    elseif key == "right" then
-        self.offset = math.min(self.offset + love.graphics.getWidth() / 50, love.graphics.getWidth() / 2)
-    end
+    if not ChapterCards:hasActive() then
+        Screen:keypressed(key)
+        if key == "left" then
+            self:decrementOffset(love.graphics.getWidth() / 50)
+            self.offset = math.max(self.offset - love.graphics.getWidth() / 50, - love.graphics.getWidth() / 2)
+        elseif key == "right" then
+            self:incrementOffset(love.graphics.getWidth() / 50)
+            self.offset = math.min(self.offset + love.graphics.getWidth() / 50, love.graphics.getWidth() / 2)
+        end
 
-    if self.debug then
-        if key >= "1" and key <= "6" then
-            DayManager:setDay(tonumber(key))
+        if self.debug then
+            if key >= "1" and key <= "6" then
+                DayManager:setDay(tonumber(key))
+            end
         end
     end
 end
@@ -155,4 +164,20 @@ end
 
 function Game:setOffset(offset)
     self.offset = offset
+end
+
+function Game:moveOffset(cursorX)
+    if cursorX <= love.graphics.getWidth() / 30 then
+        self:decrementOffset(love.graphics.getWidth() / 100)
+    elseif cursorX >= love.graphics.getWidth() * (1 - 1 / 30) then
+        self:incrementOffset(love.graphics.getWidth() / 100)
+    end
+end
+
+function Game:decrementOffset(decrease)
+    self.offset = math.max(self.offset - decrease, - love.graphics.getWidth() / 2)
+end
+
+function Game:incrementOffset(increase)
+    self.offset = math.min(self.offset + increase, love.graphics.getWidth() / 2)
 end
