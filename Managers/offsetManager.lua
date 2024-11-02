@@ -2,6 +2,9 @@ OffsetManager = Object:extend()
 
 function OffsetManager:load()
     self.offset = 0
+    self.leftArrow = love.graphics.newImage("Icons/LeftArrow.png")
+    self.rightArrow = love.graphics.newImage("Icons/RightArrow.png")
+    self.desiredIconLength = love.graphics.getWidth() / 30
 end
 
 function OffsetManager:update(dt, cursorX, cursorY)
@@ -13,6 +16,17 @@ function OffsetManager:update(dt, cursorX, cursorY)
         self:incrementOffset(love.graphics.getWidth() / 100)
     elseif cursorX >= love.graphics.getWidth() * (1 - 1 / 30) then
         self:incrementOffset(love.graphics.getWidth() / 200)
+    end
+end
+
+function OffsetManager:draw()
+    local iconSx = self.desiredIconLength / self.leftArrow:getWidth()
+    local iconSy = self.desiredIconLength / self.leftArrow:getHeight()
+    if self.offset ~= - love.graphics.getWidth() / 2 then
+        love.graphics.draw(self.leftArrow, 0, love.graphics.getHeight() / 2 - self.desiredIconLength / 2, 0, iconSx, iconSy)
+    end
+    if self.offset ~= love.graphics.getWidth() / 2 then
+        love.graphics.draw(self.rightArrow, love.graphics.getWidth() - self.desiredIconLength, love.graphics.getHeight() / 2 - self.desiredIconLength / 2, 0, iconSx, iconSy)
     end
 end
 

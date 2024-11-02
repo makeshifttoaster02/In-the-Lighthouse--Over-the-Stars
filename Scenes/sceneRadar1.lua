@@ -58,7 +58,9 @@ Contact your lighthouse coordinator for more details.]]
     
 Limit exposure.]]
     self.warningHoverBoxTitle3 = "CRITICAL"
-    self.warningHoverBoxText3 = [[Type II supernova inbound. Evacuate immediately.]]
+    self.warningHoverBoxText3 = [[Type II supernova imminent. 
+    
+Evacuate immediately.]]
     self.warningHoverBoxTitleFontSize = Terminal:getHeight() / 20
     self.warningHoverBoxTextFontSize = Terminal:getHeight() / 25
     self.warningHoverBoxTitleFont = love.graphics.newFont("Fonts/Pinscher.otf", self.warningHoverBoxTitleFontSize)
@@ -69,6 +71,26 @@ Limit exposure.]]
 
     self.isDay34 = false
     self.isDay56 = false
+    self.day4phase1 = false
+    self.day4phase2 = false
+    self.day4phase3 = false
+    self.rescueDisappear = true
+
+    self.drawRescueHoverBox = false
+    self.rescueX = self.boxX + self.boxWidth / 7 * 2
+    self.rescueY = self.boxY + self.boxHeight / 16  * 15
+    self.rescueRadius = Terminal:getHeight() / 50
+    self.rescueHoverBoxMargin = Terminal:getHeight() / 20
+    self.rescueHoverBoxTitle = "Rescue Spacecraft 4A6YTZ"
+    self.rescueHoverBoxText = [[IGSM
+Universal Coordinates: Failed to Retrieve]]
+    self.rescueHoverBoxTitleFontSize = Terminal:getHeight() / 20
+    self.rescueHoverBoxTextFontSize = Terminal:getHeight() / 25
+    self.rescueHoverBoxTitleFont = love.graphics.newFont("Fonts/Pinscher.otf", self.rescueHoverBoxTitleFontSize)
+    self.rescueHoverBoxTextFont = love.graphics.newFont("Fonts/Pinscher.otf", self.rescueHoverBoxTextFontSize)
+    self.rescueHoverBoxWidth = self.rescueHoverBoxTextFont:getWidth(self.rescueHoverBoxText) + 2 * self.margin
+    self.rescueHoverBoxHeight = self.rescueHoverBoxTitleFontSize + 2 * self.rescueHoverBoxTextFontSize + 3.5 * self.rescueHoverBoxMargin
+    self.rescueHoverBoxRadius = 3
 end
 
 function SceneRadar1:update(dt, cursorX, cursorY)
@@ -83,6 +105,7 @@ function SceneRadar1:update(dt, cursorX, cursorY)
 
     self.drawYouHoverBox = self:withinYouBounds(cursorX, cursorY)
     self.drawWarningHoverBox = self:withinWarningBounds(cursorX, cursorY)
+    self.drawRescueHoverBox = self:withinRescueBounds(cursorX, cursorY)
 end
 
 function SceneRadar1:draw()
@@ -153,6 +176,21 @@ function SceneRadar1:draw()
         love.graphics.printf(hoverText, self.warningHoverBoxTextFont, centerWarningX + self.warningHoverBoxMargin, centerWarningY + self.warningHoverBoxMargin * 2 + self.warningHoverBoxTitleFontSize, self.warningHoverBoxWidth - 2 * self.margin, "left")
     end
 
+    if not self.rescueDisappear then
+        love.graphics.circle("fill", self.rescueX, self.rescueY, self.rescueRadius)
+        if self.drawRescueHoverBox then
+            local rescueBoxY = self.rescueY - self.rescueHoverBoxHeight
+            SetColorHEX("#000000")
+            love.graphics.rectangle("fill", self.rescueX, rescueBoxY, self.rescueHoverBoxWidth, self.rescueHoverBoxHeight, self.rescueHoverBoxRadius)
+
+            SetColorHEX("#FFFFFF")
+            love.graphics.rectangle("line", self.rescueX, rescueBoxY, self.rescueHoverBoxWidth, self.rescueHoverBoxHeight, self.rescueHoverBoxRadius)
+
+            love.graphics.printf(self.rescueHoverBoxTitle, self.rescueHoverBoxTitleFont, self.rescueX + self.rescueHoverBoxMargin, rescueBoxY + self.rescueHoverBoxMargin, self.rescueHoverBoxWidth - 2 * self.margin, "left")
+            love.graphics.printf(self.rescueHoverBoxText, self.rescueHoverBoxTextFont, self.rescueX + self.rescueHoverBoxMargin, rescueBoxY + self.rescueHoverBoxMargin * 2 + self.rescueHoverBoxTitleFontSize, self.rescueHoverBoxWidth - 2 * self.margin, "left")                  
+        end
+    end
+
     love.graphics.setScissor()
     love.graphics.setShader()
 
@@ -171,6 +209,12 @@ function SceneRadar1:withinWarningBounds(cursorX, cursorY)
     return warningCursorX <= cursorX and cursorX <= warningCursorX + self.warningRadius * 2 and warningCursorY <= cursorY and cursorY <= warningCursorY + self.warningRadius * 2
 end
 
+function SceneRadar1:withinRescueBounds(cursorX, cursorY)
+    local rescueCursorX = Terminal:getX() + self.rescueX - OffsetManager:getOffset()
+    local rescueCursorY = Terminal:getY() + self.rescueY
+    return rescueCursorX - self.rescueRadius <= cursorX and cursorX <= rescueCursorX + self.rescueRadius and rescueCursorY - self.rescueRadius <= cursorY and cursorY <= rescueCursorY + self.rescueRadius
+end
+
 function SceneRadar1:triggerDay34()
     self.isDay34 = true
     self.isDay56 = false
@@ -179,4 +223,48 @@ end
 function SceneRadar1:triggerDay56()
     self.isDay34 = false
     self.isDay56 = true
+end
+
+function SceneRadar1:triggerDay4Phase1()
+    self.day4phase1 = true
+    self.day4phase2 = false
+    self.day4phase3 = false
+    self.rescueDisappear = false
+end
+
+function SceneRadar1:isDay4Phase1()
+    return self.day4phase1
+end
+
+function SceneRadar1:triggerDay4Phase2()
+    self.day4phase1 = false
+    self.day4phase2 = true
+    self.day4phase3 = false
+    SongManager:fadeIntoNext()
+    Terminal:getHidable("SceneSos2"):triggerDay4Phase2()
+end
+
+function SceneRadar1:isDay4Phase2()
+    return self.day4phase2
+end
+
+function SceneRadar1:triggerDay4Phase3()
+    self.day4phase1 = false
+    self.day4phase2 = false
+    self.day4phase3 = true
+    SongManager:suddenlyIntoNext()
+    Terminal:getHidable("SceneSos2"):untriggerDay4Phase2()
+    Background:getDrawable("Bed"):enableClick()
+end
+
+function SceneRadar1:isDay4Phase3()
+    return self.day4phase3
+end
+
+function SceneRadar1:makeRescueDisappear()
+    self.rescueDisappear = true
+end
+
+function SceneRadar1:isRescueDisappear()
+    return self.rescueDisappear
 end

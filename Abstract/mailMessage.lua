@@ -74,6 +74,9 @@ DNLMRN#707605]]
     self.currSendingDuration = 0
     self.failedDuration = math.random(4, 8)
     self.currFailedDuration = 0
+
+    self.hasGael = (messageName == "SceneMail1Message6")
+    self.gael = GaelAttachment()
 end
 
 function MailMessage:update(dt, cursorX, cursorY)
@@ -101,6 +104,10 @@ function MailMessage:update(dt, cursorX, cursorY)
                     self.sendingText = "Failed to send. Please try again later."
                 end
             end
+        end
+
+        if self.hasGael then
+            self.gael:markHovering(cursorX, cursorY)
         end
     end
 
@@ -151,7 +158,11 @@ function MailMessage:draw()
                 love.graphics.print(self.sendingText, self.sendingTextFont, sendingTextX, sendingTextY)
             end
         else
-            love.graphics.printf(self.cantReplyText, self.sendingTextFont, self.x, textY + self.totalTextHeight, self.textboxWidth, "center")
+            if self.hasGael then
+                self.gael:draw()
+            else
+                love.graphics.printf(self.cantReplyText, self.sendingTextFont, self.x, textY + self.totalTextHeight, self.textboxWidth, "center")
+            end
         end
         love.graphics.setScissor()
 
@@ -176,11 +187,15 @@ end
 
 function MailMessage:mousereleased(cursorX, cursorY)
     if self.visible then
-        if self.replyButton:isVisible() then
-            self.replyButton:mousereleased(cursorX, cursorY, self.messageName)
+        if self.hasGael then
+            self.gael:mousereleased(cursorX, cursorY)
         else
-            self.cancelButton:mousereleased(cursorX, cursorY, self.messageName)
-            self.sendButton:mousereleased(cursorX, cursorY, self.messageName)
+            if self.replyButton:isVisible() then
+                self.replyButton:mousereleased(cursorX, cursorY, self.messageName)
+            else
+                self.cancelButton:mousereleased(cursorX, cursorY, self.messageName)
+                self.sendButton:mousereleased(cursorX, cursorY, self.messageName)
+            end
         end
     end
 end
@@ -224,7 +239,15 @@ function MailMessage:restoreDefaults()
     self:deactivateReplyInput()
 end
 
+function MailMessage:getScrollOffset()
+    return self.scrollOffset
+end
+
 function MailMessage:getMaxScrollOffset()
+    if self.hasGael then
+        return self.totalTextHeight + self.gael:getMargin() + self.gael:getHeight() + self.replyButton:getHeight() - self.textboxHeight
+    end
+
     if self.replyButton:isVisible() then
         return self.totalTextHeight + self.replyButton:getHeight() - self.textboxHeight + self.cancelMargin
     end
@@ -268,4 +291,12 @@ end
 
 function MailMessage:isReplyInputActive()
     return self.replyInputActive
+end
+
+function MailMessage:getTotalTextHeight()
+    return self.totalTextHeight
+end
+
+function MailMessage:getGaelY()
+    return self.totalTextHeight + self.y - self.scrollOffset
 end

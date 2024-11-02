@@ -58,3 +58,7 @@ function Background:freshenDrawables(toFreshen)
         self.drawables[drawableName]:freshen()
     end
 end
+
+function Background:getDrawable(drawableName)
+    return self.drawables[drawableName]
+end

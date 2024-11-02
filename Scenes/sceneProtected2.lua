@@ -9,7 +9,7 @@ function SceneProtected2:new()
     self.xIconMargin = Terminal:getWidth() / 2 - self.desiredIconLength / 2
     self.yIconMargin = Terminal:getHeight() / 2 - self.desiredIconLength / 2
 
-    self.showUpdateDuration = 1
+    self.showUpdateDuration = 1.5
     self.showCurrDuration = 0
 end
 

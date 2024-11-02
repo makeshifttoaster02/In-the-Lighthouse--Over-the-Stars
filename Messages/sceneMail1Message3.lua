@@ -5,7 +5,7 @@ function SceneMail1Message3:new()
     local cantReply = true
     local cantReplyText = "This sender has disabled replies to this message."
     local text = [[[URGENT] Debris Notice
-November 26, 2079
+November 25, 2079
 -------------
     
 Hello,

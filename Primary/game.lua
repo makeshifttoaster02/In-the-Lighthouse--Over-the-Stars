@@ -7,6 +7,7 @@ function Game:load()
 
     self.start = true
     self.debug = true
+    -- self.debug = false
 
     self.handCursor = love.mouse.getSystemCursor("hand")
 
@@ -58,6 +59,7 @@ function Game:draw()
     self:drawBackground()
     self:drawScreen()
     DialogueBox:draw()
+    OffsetManager:draw()
 
     if self.start then
         SetColorHEX("#000000")
@@ -90,10 +92,11 @@ function Game:keypressed(key)
     if not CardManager:hasSemiActive() then
         Screen:keypressed(key)
         OffsetManager:keypressed(key)
+        DialogueBox:keypressed(key)
 
         if self.debug then
             if key >= "1" and key <= "6" then
-                DayManager:setDay(tonumber(key))
+                DayManager:keypressed(key)
             end
         end
     end

@@ -38,7 +38,7 @@ end
 
 function CardManager:hasSemiActive()
     for _, card in ipairs(self.chapterCards) do
-        if card:getOpacity() > 0.3 then
+        if card:getOpacity() > 0.6 then
             return true
         end
     end

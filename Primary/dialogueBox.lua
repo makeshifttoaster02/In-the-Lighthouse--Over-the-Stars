@@ -23,6 +23,12 @@ function DialogueBox:load()
     self.currDialogueIndex = 0
     self.characterDuration = 0.025
     self.currCharacterDuration = 0
+
+    self.decisionStrings = {
+        ["Go to sleep?"] = true,
+        ["Witness the end?"] = true,
+        ["If you do this, your journey will truly be over. Are you sure?"] = true
+    }
 end
 
 function DialogueBox:update(dt, cursorX, cursorY)
@@ -81,29 +87,35 @@ function DialogueBox:draw()
 end
 
 function DialogueBox:mousereleased(cursorX, cursorY)
-    if self.visible and self:withinBounds(cursorX, cursorY) and string.len(self.currDialogueSubstr) > 2 / 3 * string.len(self.currDialogue) then
+    if self.visible and not self:onDecisionString() and self:withinBounds(cursorX, cursorY) and string.len(self.currDialogueSubstr) >= math.min(string.len(self.currDialogue), 5) then
         self.currDialogueTree:trigger()
     end
 end
 
 function DialogueBox:keypressed(key)
     if self.visible and key == "escape" then
-        DialogueTree:escape()
+        self.currDialogueTree:escape()
     end
 end
 
 function DialogueBox:markHovering(cursorX, cursorY)
     if self.visible then
-        if self:withinBounds(cursorX, cursorY) then
-            -- if not self.hovering then
-            --     TEsound.play("Sounds/Hover.wav", "static")
-            -- end
-            self.hovering = true
-            Game:setHovering()
-        else
-            self.hovering = false
+        if not self:onDecisionString() then
+            if self:withinBounds(cursorX, cursorY) then
+                -- if not self.hovering then
+                --     TEsound.play("Sounds/Hover.wav", "static")
+                -- end
+                self.hovering = true
+                Game:setHovering()
+            else
+                self.hovering = false
+            end
         end
     end
+end
+
+function DialogueBox:onDecisionString()
+    return self.decisionStrings[self.currDialogue] or false
 end
 
 function DialogueBox:reset()

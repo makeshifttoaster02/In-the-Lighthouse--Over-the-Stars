@@ -5,7 +5,7 @@ function SceneMail1Entry5:new()
     local sender = "Janice"
     local date = "11/28/2079"
     local index = 1
-    SceneMail1Entry3.super.new(self, title, sender, date, index)
+    SceneMail1Entry5.super.new(self, title, sender, date, index)
 end
 
 function SceneMail1Entry5:mousereleased(cursorX, cursorY)

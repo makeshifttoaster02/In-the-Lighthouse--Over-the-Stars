@@ -17,6 +17,12 @@ function SceneProtected1:new()
     self.letterCursorPresent = false
     self.letterCursorUpdateDuration = 0.5
     self.letterCursorCurrDuration = 0
+
+    self.hintText = "Hint: Middle"
+    self.hintFontSize = self.fontSize / 4
+    self.hintFont = love.graphics.newFont("Fonts/Pinscher.otf", self.hintFontSize)
+    self.hintX = 0
+    self.hintY = self.slotYMargin + self.fontSize + self.textYMargin / 4
 end
 
 function SceneProtected1:update(dt, cursorX, cursorY)
@@ -29,6 +35,7 @@ end
 
 function SceneProtected1:draw()
     love.graphics.printf(self.text, self.font, self.textX, self.textY, Terminal:getWidth(), "center")
+    love.graphics.printf(self.hintText, self.hintFont, self.hintX, self.hintY, Terminal:getWidth(), "center")
     local letterX = self.sideMargin - (self.font:getWidth(self.slots[1]) + self.slotMargin)
     for i = 1, #self.slots do
         local currLetter = self.slots[i]
@@ -60,10 +67,14 @@ function SceneProtected1:keypressed(key)
             self.currSlotIndex = self.currSlotIndex + 1
             if self.currSlotIndex == 7 then
                 Terminal:hideAll()
-                Terminal:getHidables()["SceneProtected2"]:show()
+                if self:isPasswordCorrect() then
+                    Terminal:getHidable("SceneProtected3"):show()
+                else
+                    Terminal:getHidables()["SceneProtected2"]:show()
+                    TEsound.play("Sounds/Incorrect.mp3", "static")
+                end
                 self.currSlotIndex = 1
                 self.slots = {"_", "_", "_", "_", "_", "_"}
-                TEsound.play("Sounds/Incorrect.mp3", "static")
             end
         end
 
@@ -76,4 +87,13 @@ function SceneProtected1:keypressed(key)
             end
         end
     end
+end
+
+function SceneProtected1:isPasswordCorrect()
+    local potentialPassword = ""
+    for _, letter in ipairs(self.slots) do
+        potentialPassword = potentialPassword .. letter
+    end
+
+    return potentialPassword == "STEFAN"
 end

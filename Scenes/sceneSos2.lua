@@ -20,9 +20,10 @@ function SceneSos2:new()
     self.yTextMargin = Terminal:getHeight() / 2 - self.textHeight / 2
 
     self.periodTextUpdateDuration = 0.7
-    self.sceneUpdateDuration = math.random(7, 15)
+    self.sceneUpdateDuration = self:getRandomUpdateDuration()
     self.currPeriodDuration = 0
     self.currSceneDuration = 0
+    self.isDay4Phase2 = false
 end
 
 function SceneSos2:update(dt, cursorX, cursorY)
@@ -37,8 +38,13 @@ function SceneSos2:update(dt, cursorX, cursorY)
 
     self.currSceneDuration = self.currSceneDuration + dt
     if self.currSceneDuration >= self.sceneUpdateDuration then
+        self.currSceneDuration = 0
         Terminal:hideAll()
         Terminal:getHidables()["SceneSos3"]:show()
+        local radarScene = Terminal:getHidable("SceneRadar1")
+        if self.isDay4Phase2 then
+            radarScene:makeRescueDisappear()
+        end
     end
 end
 
@@ -61,8 +67,24 @@ function SceneSos2:mousereleased(cursorX, cursorY)
 end
 
 function SceneSos2:restoreDefaults()
-    self.sceneUpdateDuration = math.random(7, 15)
+    self.sceneUpdateDuration = self:getRandomUpdateDuration()
     self.currPeriodDuration = 0
     self.currSceneDuration = 0
     self.periodText = "."
+end
+
+function SceneSos2:getRandomUpdateDuration()
+    local duration = math.random(7, 15)
+    if self.isDay4Phase2 then
+        duration = math.random(30, 35)
+    end
+    return duration
+end
+
+function SceneSos2:triggerDay4Phase2()
+    self.isDay4Phase2 = true
+end
+
+function SceneSos2:untriggerDay4Phase2()
+    self.isDay4Phase2 = false
 end

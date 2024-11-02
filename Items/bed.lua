@@ -35,11 +35,19 @@ function Bed:new()
 end
 
 function Bed:mousereleased(cursorX, cursorY)
-    if self:withinBounds(cursorX, cursorY) and DayManager:getDay() ~= 6 then
+    if self.clickable and self:withinBounds(cursorX, cursorY) and DayManager:getDay() ~= 6 then
         DayManager:nextDay()
     end
     -- if self:withinBounds(cursorX, cursorY) then
     --     self.fresh = true
     --     self.decision:show()
     -- end
+end
+
+function Bed:disableClick()
+    self.clickable = false
+end
+
+function Bed:enableClick()
+    self.clickable = true
 end

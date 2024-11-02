@@ -9,5 +9,11 @@ end
 
 function OptionRadar:goToScene()
     Terminal:hideAll()
-    Terminal:getHidable("SceneRadar1"):show()
+    local radarScene = Terminal:getHidable("SceneRadar1")
+    radarScene:show()
+    if radarScene:isDay4Phase1() then
+        radarScene:triggerDay4Phase2()
+    elseif radarScene:isDay4Phase2() and radarScene:isRescueDisappear() then
+        radarScene:triggerDay4Phase3()
+    end
 end

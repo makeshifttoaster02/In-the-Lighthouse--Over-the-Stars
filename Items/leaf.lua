@@ -24,37 +24,37 @@ function Leaf:new()
             [1] =
 
             {
-                {"Daniel", "On the last day we all lived under one roof, we carved N-D-G on our old lime tree, daring tomorrow never to come."}
+                {"Daniel", "On the last night we all lived under one roof, we carved N-D-G on our old lime tree, daring tomorrow never to come."}
             },
 
             [2] =
 
             {
-                {"Daniel", "On the last day we all lived under one roof, we carved N-D-G on our old lime tree, daring tomorrow never to come."}
+                {"Daniel", "On the last night we all lived under one roof, we carved N-D-G on our old lime tree, daring tomorrow never to come."}
             },
 
             [3] =
 
             {
-                {"Daniel", "On the last day we all lived under one roof, we carved N-D-G on our old lime tree, daring tomorrow never to come."}
+                {"Daniel", "On the last night we all lived under one roof, we carved N-D-G on our old lime tree, daring tomorrow never to come."}
             },
 
             [4] =
 
             {
-                {"Daniel", "On the last day we all lived under one roof, we carved N-D-G on our old lime tree, daring tomorrow never to come."}
+                {"Daniel", "On the last night we all lived under one roof, we carved N-D-G on our old lime tree, daring tomorrow never to come."}
             },
 
             [5] =
 
             {
-                {"Daniel", "On the last day we all lived under one roof, we carved N-D-G on our old lime tree, daring tomorrow never to come."}
+                {"Daniel", "On the last night we all lived under one roof, we carved N-D-G on our old lime tree, daring tomorrow never to come."}
             },
 
             [6] =
 
             {
-                {"Daniel", "On the last day we all lived under one roof, we carved N-D-G on our old lime tree, daring tomorrow never to come."}
+                {"Daniel", "On the last night we all lived under one roof, we carved N-D-G on our old lime tree, daring tomorrow never to come."}
             }
         }
     )

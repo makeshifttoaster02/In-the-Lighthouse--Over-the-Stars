@@ -3,7 +3,7 @@ Taskbar = Object:extend()
 function Taskbar:load()
     self.x = 0
     self.y = Terminal:getHeight()
-    self.date = "November 17, 2084"
+    self.date = "November 22, 2084"
 
     self.buttonVerticalMargin = love.graphics.getHeight() / 40
     self.buttonHorizontalMargin = self.buttonVerticalMargin * 2
@@ -38,4 +38,8 @@ end
 
 function Taskbar:getHeight()
     return self.button:getHeight() + 2 * self.buttonVerticalMargin
+end
+
+function Taskbar:setDate(date)
+    self.date = date
 end
