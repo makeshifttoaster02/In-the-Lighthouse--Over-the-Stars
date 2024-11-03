@@ -2,11 +2,13 @@ Hidable = Object:extend()
 
 function Hidable:new()
     self.visible = false
+    self.seen = false
 end
 
 function Hidable:show()
     self:restoreDefaults()
     self.visible = true
+    self.seen = true
 end
 
 function Hidable:hide()
@@ -35,4 +37,8 @@ end
 
 function Hidable:isMailMessage()
     return false
+end
+
+function Hidable:isSeen()
+    return self.seen
 end

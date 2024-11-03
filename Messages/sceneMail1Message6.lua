@@ -25,7 +25,7 @@ We know that no amount of apology could ever be enough. Once again, man's presum
 On behalf of everyone at the Intergalactic Space Ministry, we bow our heads in grief and silence.
 
 Reina White
-Chief Operating Officer
+Chief Arbiter
 IGSM
 REINAW#235477]]
     SceneMail1Message6.super.new(self, text, cantReply, cantReplyText, messageName)

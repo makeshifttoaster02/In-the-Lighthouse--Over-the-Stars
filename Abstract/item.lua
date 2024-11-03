@@ -17,6 +17,7 @@ function Item:new(images, imageX, imageY, clickable, assetX, assetY, assetWidth,
     self.dialogueTree = dialogueTree
 
     self.fresh = true
+    self.eternallyFresh = false
 end
 
 function Item:update(dt, cursorX, cursorY)
@@ -44,7 +45,9 @@ function Item:mousereleased(cursorX, cursorY)
     if self.clickable and self:withinBounds(cursorX, cursorY) then
         self.dialogueTree:initialize()
         self.hovering = false
-        self.fresh = false
+        if not self.eternallyFresh then
+            self.fresh = false
+        end
     end
 end
 
@@ -77,9 +80,23 @@ function Item:freshen()
 end
 
 function Item:unfreshen()
-    self.fresh = false
+    if not self.eternallyFresh then
+        self.fresh = false
+    end
 end
 
 function Item:isFresh()
     return self.fresh
+end
+
+function Item:getDialogueTree()
+    return self.dialogueTree
+end
+
+function Item:setDialogueTree(dialogueTree)
+    self.dialogueTree = dialogueTree
+end
+
+function Item:uneternallyFresh()
+    self.eternallyFresh = false
 end

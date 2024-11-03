@@ -67,3 +67,18 @@ function Window:new()
 
     Window.super.new(self, images, imageX, imageY, clickable, assetX, assetY, assetWidth, assetHeight, dialogueTree)
 end
+
+function Window:dialogueChangeMid6()
+    local dialogueTree = self:getDialogueTree()
+    local dialogueList = dialogueTree:getDialogueList()
+    local new6 = {
+        {"Daniel", "Outside the window, wisps of starlight brush against the hull of the lighthouse."},
+        {"Daniel", "In this lighthouse over the stars, I've made my peace."},
+        {"Daniel", "It's time to go."},
+    }
+
+    dialogueList[6] = new6
+    dialogueTree:setDialogueList(dialogueList)
+    self:setDialogueTree(dialogueTree)
+    self.fresh = true
+end

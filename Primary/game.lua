@@ -7,7 +7,7 @@ function Game:load()
 
     self.start = true
     self.debug = true
-    -- self.debug = false
+    self.debug = false
 
     self.handCursor = love.mouse.getSystemCursor("hand")
 
@@ -29,6 +29,8 @@ function Game:load()
 
     DialogueBox:load()
 
+    End:load()
+
     DayManager:setDay(1)
 end
 
@@ -40,6 +42,7 @@ function Game:update(dt)
     Screen:update(dt, cursorX, cursorY)
     DialogueBox:update(dt, cursorX, cursorY)
     DialogueBox:markHovering(cursorX, cursorY)
+    End:update(dt)
 
     DayManager:update(dt)
     OffsetManager:update(dt, cursorX, cursorY)
@@ -60,6 +63,7 @@ function Game:draw()
     self:drawScreen()
     DialogueBox:draw()
     OffsetManager:draw()
+    End:draw()
 
     if self.start then
         SetColorHEX("#000000")
@@ -75,21 +79,30 @@ function Game:draw()
 end
 
 function Game:mousereleased(cursorX, cursorY, button)
-    if not CardManager:hasSemiActive() then
-        local leftMouseClick = 1
-        if button == leftMouseClick then
-            if DialogueBox:isVisible() then
-                DialogueBox:mousereleased(cursorX, cursorY)
-            else
-                Background:mousereleased(cursorX, cursorY)
-                Screen:mousereleased(cursorX, cursorY)
+    if End:isReadyToEnd() then
+        love.event.quit()
+    end
+
+    if not End:isFadingIn() then
+        if not CardManager:hasSemiActive() then
+            local leftMouseClick = 1
+            if button == leftMouseClick then
+                if DialogueBox:isVisible() then
+                    DialogueBox:mousereleased(cursorX, cursorY)
+                else
+                    Background:mousereleased(cursorX, cursorY)
+                    Screen:mousereleased(cursorX, cursorY)
+                end
             end
         end
     end
 end
 
 function Game:keypressed(key)
-    if not CardManager:hasSemiActive() then
+    if End:isReadyToEnd() then
+        love.event.quit()
+    end
+    if not CardManager:hasSemiActive() and not End:isFadingIn() then
         Screen:keypressed(key)
         OffsetManager:keypressed(key)
         DialogueBox:keypressed(key)

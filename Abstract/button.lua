@@ -22,6 +22,7 @@ function Button:new(x, y, text, fontSize, icon)
     self.radius = 5
 
     self.hovering = false
+    self.isTerminalButton = true
 end
 
 function Button:update(dt, cursorX, cursorY)
@@ -53,14 +54,21 @@ function Button:mousereleased(cursorX, cursorY)
 end
 
 function Button:withinBounds(cursorX, cursorY)
-    local buttonCursorX = Terminal:getX() + self.x - OffsetManager:getOffset()
-    local buttonCursorY = Terminal:getY() + self.y
+    if self.isTerminalButton then
+        local buttonCursorX = Terminal:getX() + self.x - OffsetManager:getOffset()
+        local buttonCursorY = Terminal:getY() + self.y
+        return buttonCursorX <= cursorX and cursorX <= buttonCursorX + self.width and
+                buttonCursorY <= cursorY and cursorY <= buttonCursorY + self.height
+    end
+
+    local buttonCursorX = self.x
+    local buttonCursorY = self.y
     return buttonCursorX <= cursorX and cursorX <= buttonCursorX + self.width and
             buttonCursorY <= cursorY and cursorY <= buttonCursorY + self.height
 end
 
 function Button:markHovering(cursorX, cursorY)
-    if self:withinBounds(cursorX, cursorY) and not DialogueBox:isVisible() then
+    if self:withinBounds(cursorX, cursorY) and (not self.isTerminalButton or not DialogueBox:isVisible()) then
         if not self.hovering then
             TEsound.play("Sounds/Hover.wav", "static")
         end
@@ -93,4 +101,8 @@ end
 
 function Button:setY(y)
     self.y = y
+end
+
+function Button:setNonTerminal()
+    self.isTerminalButton = false
 end

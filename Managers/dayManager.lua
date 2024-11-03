@@ -12,7 +12,7 @@ function DayManager:load()
     }
 
     self.delayLoad = false
-    self.cardStayDuration = 5
+    self.cardStayDuration = 3.5
     self.currStayDuration = 0
 end
 
@@ -31,6 +31,7 @@ function DayManager:update(dt)
                 Terminal:getHidable("Menu"):show()
                 Terminal:getHidable("SceneMail1"):resetScrollOffset()
                 Terminal:getHidable("SceneSos2"):restoreDefaults()
+                Background:unfreshenAll()
                 self.dayInits[self.currDay]()
                 SongManager:makeReadyToPlay()
                 Taskbar:setDate(self:getDate())
@@ -108,9 +109,10 @@ function DayManager:initDay5()
 end
 
 function DayManager:initDay6()
-    Background:freshenDrawables({"Bed"})
+    Background:freshenDrawables({})
     Terminal:getHidable("SceneRadar1"):triggerDay56()
     Terminal:getHidable("SceneMail1"):setEntries({SceneMail1Entry6()})
+    Background:getDrawable("Bed"):uneternallyFresh()
 end
 
 function DayManager:getDate()

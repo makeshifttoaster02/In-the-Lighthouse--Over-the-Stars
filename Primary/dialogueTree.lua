@@ -14,6 +14,20 @@ function DialogueTree:trigger()
         DialogueBox:setDialogueTree(nil)
         DialogueBox:setDialogue("")
         DialogueBox:hide()
+        DialogueBox:setNotHovering()
+
+        local _, lastDialogue = table.unpack(currDialogueChain[#currDialogueChain])
+        if lastDialogue == "Go to sleep?" then
+            DayManager:nextDay()
+        end
+
+        if lastDialogue == "Tomorrow is a better day." then
+            DayManager:nextDay()
+        end
+
+        if lastDialogue == "If you do this, your journey will truly be over. Are you sure?" then
+            End:fadeIn()
+        end
     else
         DialogueBox:setDialogueTree(self)
         local currSpeaker, currDialogue = table.unpack(currDialogueChain[self.dialogueIndex])
@@ -28,7 +42,18 @@ function DialogueTree:initialize()
 end
 
 function DialogueTree:escape()
-    local currDialogueChain = self.dialogueList[DayManager:getDay()]
-    self.dialogueIndex = #currDialogueChain
-    self:trigger()
+    DialogueBox:reset()
+    self.dialogueIndex = 0
+    DialogueBox:setDialogueTree(nil)
+    DialogueBox:setDialogue("")
+    DialogueBox:hide()
+    DialogueBox:setNotHovering()
+end
+
+function DialogueTree:setDialogueList(dialogueList)
+    self.dialogueList = dialogueList
+end
+
+function DialogueTree:getDialogueList()
+    return self.dialogueList
 end

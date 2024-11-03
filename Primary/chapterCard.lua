@@ -11,7 +11,7 @@ function ChapterCard:new(number, title)
     self.titleFontSize = love.graphics.getHeight() / 10
 
     self.chapterFont = love.graphics.newFont("Fonts/Sunday Work.otf", self.numberFontSize)
-    self.chapterText = "Part " .. self.number
+    self.chapterText = "Chapter " .. self.number
 
     self.titleFont = love.graphics.newFont("Fonts/Sunday Work.otf", self.titleFontSize)
 end

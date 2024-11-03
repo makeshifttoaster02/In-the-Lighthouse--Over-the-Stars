@@ -59,6 +59,12 @@ function Background:freshenDrawables(toFreshen)
     end
 end
 
+function Background:unfreshenAll()
+    for _, currDrawable in pairs(self.drawables) do
+        currDrawable:unfreshen()
+    end
+end
+
 function Background:getDrawable(drawableName)
     return self.drawables[drawableName]
 end

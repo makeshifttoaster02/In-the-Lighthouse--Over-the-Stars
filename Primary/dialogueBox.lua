@@ -29,11 +29,17 @@ function DialogueBox:load()
         ["Witness the end?"] = true,
         ["If you do this, your journey will truly be over. Are you sure?"] = true
     }
+
+    self.yesButton = YesButton()
+    self.noButton = NoButton()
+    self.displayDecisionButtonDuration = 0.3
+    self.currDecisionButtonDuration = 0
 end
 
 function DialogueBox:update(dt, cursorX, cursorY)
     if self.visible then
         if self.currDialogueSubstr ~= self.currDialogue then
+            self.currDecisionButtonDuration = 0
             self.currCharacterDuration = self.currCharacterDuration + dt
             if self.currCharacterDuration >= self.characterDuration then
                 self.currDialogueIndex = self.currDialogueIndex + 1
@@ -59,6 +65,12 @@ function DialogueBox:update(dt, cursorX, cursorY)
                 -- TEsound.stop("Daniel")
                 TEsound.play("Sounds/Daniel.mp3", "static", "Daniel", 4)
             end
+        else
+            self.currDecisionButtonDuration = self.currDecisionButtonDuration + dt
+            if self.currDecisionButtonDuration >= self.displayDecisionButtonDuration then
+                self.yesButton:markHovering(cursorX, cursorY)
+                self.noButton:markHovering(cursorX, cursorY)
+            end
         end
     end
 end
@@ -83,12 +95,29 @@ function DialogueBox:draw()
         love.graphics.printf(self.currDialogueSubstr, self.boxFont, dialogueX, dialogueY, dialogueWidth, "left")
 
         love.graphics.setShader()
+
+        if self:onDecisionString() then
+            if self.currDecisionButtonDuration >= self.displayDecisionButtonDuration then
+                self.noButton:draw()
+                self.yesButton:draw()
+            end
+        end
+
+        love.graphics.setShader()
     end
 end
 
 function DialogueBox:mousereleased(cursorX, cursorY)
-    if self.visible and not self:onDecisionString() and self:withinBounds(cursorX, cursorY) and string.len(self.currDialogueSubstr) >= math.min(string.len(self.currDialogue), 5) then
-        self.currDialogueTree:trigger()
+    if self.visible and string.len(self.currDialogueSubstr) >= math.min(string.len(self.currDialogue), 5) then
+        if self:withinBounds(cursorX, cursorY) and not self:onDecisionString() then
+            self.currDialogueTree:trigger()
+        end
+
+        if self:onDecisionString() then
+            self.hovering = false
+            self.yesButton:mousereleased(cursorX, cursorY)
+            self.noButton:mousereleased(cursorX, cursorY)
+        end
     end
 end
 
@@ -147,4 +176,32 @@ end
 
 function DialogueBox:setDialogueTree(currDialogueTree)
     self.currDialogueTree = currDialogueTree
+end
+
+function DialogueBox:getBoxX()
+    return self.boxX
+end
+
+function DialogueBox:getBoxY()
+    return self.boxY
+end
+
+function DialogueBox:getBoxWidth()
+    return self.boxWidth
+end
+
+function DialogueBox:getBoxHeight()
+    return self.boxHeight
+end
+
+function DialogueBox:getBoxFontSize()
+    return self.boxFontSize
+end
+
+function DialogueBox:getCurrDialogueTree()
+    return self.currDialogueTree
+end
+
+function DialogueBox:setNotHovering()
+    self.hovering = false
 end

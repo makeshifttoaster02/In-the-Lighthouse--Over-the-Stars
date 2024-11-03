@@ -54,16 +54,31 @@ function Door:new()
             [5] =
 
             {
-                {"Daniel", "Door to the cosmos."},
+                {"Daniel", "Door to the nether."},
             },
 
             [6] =
 
             {
-                {"Daniel", "Door to the cosmos."},
+                {"Daniel", "Door to the nether."},
             },
         }
     )
 
     Door.super.new(self, images, imageX, imageY, clickable, assetX, assetY, assetWidth, assetHeight, dialogueTree)
+end
+
+function Door:dialogueChangeMid6()
+    local dialogueTree = self:getDialogueTree()
+    local dialogueList = dialogueTree:getDialogueList()
+    local new6 = {
+        {"Daniel", "Witness the end?"},
+        {"Daniel", "If you do this, your journey will truly be over. Are you sure?"}
+    }
+
+    dialogueList[6] = new6
+    dialogueTree:setDialogueList(dialogueList)
+    self:setDialogueTree(dialogueTree)
+    self.fresh = true
+    self.eternallyFresh = true
 end
