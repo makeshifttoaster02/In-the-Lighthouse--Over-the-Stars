@@ -15,6 +15,7 @@ function SongManager:load()
        [7] = love.audio.newSource("Sounds/Start 5.mp3", "stream"),
 
        [8] = love.audio.newSource("Sounds/Start 6.mp3", "stream"),
+       [9] = love.audio.newSource("Sounds/Cutscene.mp3", "stream")
     }
 
     self:resetVolumes()
@@ -72,6 +73,9 @@ function SongManager:suddenlyIntoNext()
     self.currSong = self.songs[self.currIndex]
     self.currSong:setVolume(1)
     love.audio.setVolume(self.maxVolume)
+    if self.currIndex == #self.songs then
+        love.audio.setVolume(self.maxVolume * 2)
+    end
     self.currVolume = self.maxVolume
     self.currSong:play()
 end
@@ -81,6 +85,8 @@ function SongManager:resetVolumes()
         song:setLooping(true)
         song:setVolume(0)
     end
+
+    self.songs[#self.songs]:setLooping(false)
 end
 
 function SongManager:makeReadyToPlay()

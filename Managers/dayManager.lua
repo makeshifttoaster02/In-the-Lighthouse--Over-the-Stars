@@ -42,9 +42,8 @@ end
 
 function DayManager:keypressed(key)
     local dayNum = tonumber(key)
-    local songIndexMapping = {0, 1, 2, 3, 6, 7}
+    local songIndexMapping = {0, 1, 2, 3, 6, 7, 8}
     SongManager:setIndex(songIndexMapping[dayNum])
-
     DayManager:setDay(dayNum)
 end
 

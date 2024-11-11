@@ -26,7 +26,7 @@ function DialogueTree:trigger()
         end
 
         if lastDialogue == "If you do this, your journey will truly be over. Are you sure?" then
-            End:fadeIn()
+            End:trigger()
         end
     else
         DialogueBox:setDialogueTree(self)

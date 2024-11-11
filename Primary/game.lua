@@ -7,7 +7,7 @@ function Game:load()
 
     self.start = true
     self.debug = true
-    self.debug = false
+    -- self.debug = false
 
     self.handCursor = love.mouse.getSystemCursor("hand")
 
@@ -38,10 +38,12 @@ function Game:update(dt)
     TEsound.cleanup()
 
     local cursorX, cursorY = love.mouse.getPosition()
-    Background:update(dt, cursorX, cursorY)
-    Screen:update(dt, cursorX, cursorY)
-    DialogueBox:update(dt, cursorX, cursorY)
-    DialogueBox:markHovering(cursorX, cursorY)
+    if not End:isCutsceneTriggered() then
+        Background:update(dt, cursorX, cursorY)
+        Screen:update(dt, cursorX, cursorY)
+        DialogueBox:update(dt, cursorX, cursorY)
+        DialogueBox:markHovering(cursorX, cursorY)
+    end
     End:update(dt)
 
     DayManager:update(dt)
@@ -83,7 +85,7 @@ function Game:mousereleased(cursorX, cursorY, button)
         love.event.quit()
     end
 
-    if not End:isFadingIn() then
+    if not End:isCutsceneTriggered() then
         if not CardManager:hasSemiActive() then
             local leftMouseClick = 1
             if button == leftMouseClick then
@@ -102,7 +104,7 @@ function Game:keypressed(key)
     if End:isReadyToEnd() then
         love.event.quit()
     end
-    if not CardManager:hasSemiActive() and not End:isFadingIn() then
+    if not CardManager:hasSemiActive() and not End:isCutsceneTriggered() then
         Screen:keypressed(key)
         OffsetManager:keypressed(key)
         DialogueBox:keypressed(key)
@@ -110,6 +112,10 @@ function Game:keypressed(key)
         if self.debug then
             if key >= "1" and key <= "6" then
                 DayManager:keypressed(key)
+            end
+            if key == "7" then
+                SongManager:setIndex(8)
+                End:trigger()
             end
         end
     end
