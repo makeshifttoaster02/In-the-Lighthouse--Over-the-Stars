@@ -88,13 +88,16 @@ function Game:mousereleased(cursorX, cursorY, button)
     if not End:isCutsceneTriggered() then
         if not CardManager:hasSemiActive() then
             local leftMouseClick = 1
+            local rightMouseClick = 2
             if button == leftMouseClick then
                 if DialogueBox:isVisible() then
-                    DialogueBox:mousereleased(cursorX, cursorY)
+                    DialogueBox:mousereleased(cursorX, cursorY, button)
                 else
                     Background:mousereleased(cursorX, cursorY)
                     Screen:mousereleased(cursorX, cursorY)
                 end
+            elseif button == rightMouseClick then
+                DialogueBox:mousereleased(cursorX, cursorY, button)
             end
         end
     end
@@ -105,9 +108,19 @@ function Game:keypressed(key)
         love.event.quit()
     end
     if not CardManager:hasSemiActive() and not End:isCutsceneTriggered() then
-        Screen:keypressed(key)
-        OffsetManager:keypressed(key)
-        DialogueBox:keypressed(key)
+        if DialogueBox:isVisible() then
+            DialogueBox:keypressed(key)
+        else
+            if (Terminal:getHidable("SceneProtected1"):isVisible() or Terminal:isReplyInputActive()) then
+                Screen:keypressed(key)
+            else
+                OffsetManager:keypressed(key)
+            end
+
+            if (Terminal:getHidable("SceneProtected1"):isVisible()) and (key == "left" or key == "right") then
+                OffsetManager:keypressed(key)
+            end
+        end
 
         if self.debug then
             if key >= "1" and key <= "6" then

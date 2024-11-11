@@ -32,7 +32,7 @@ function Rocket:new()
             {
                 {"Daniel", "Gael and I lived with Nana, 120 miles away from the nearest city."},
                 {"Daniel", "When we got home from school, the two of us would clamor out of the car and excitedly get to work on the telescope we were building."},
-                {"Daniel", "When the telescope was done, we perched it underneath a moonkissed tree and spent hours stargazing."},
+                {"Daniel", "When the telescope was done, we perched it underneath a moonlit tree and spent hours stargazing."},
                 {"Daniel", "Away from the city, away from the world, we watched the windblown clouds melt away into cotton candy swirls of pinks and purples."},
                 {"Daniel", "We didn't know we were making memories - we were just having fun."}
             },

@@ -129,3 +129,13 @@ end
 function Terminal:getCrtShader()
     return self.crtShader
 end
+
+function Terminal:isReplyInputActive()
+    for _, currHidable in pairs(self.hidables) do
+        if currHidable:isVisible() and currHidable:isMailMessage() and currHidable:isReplyInputActive() then
+            return true
+        end
+    end
+
+    return false
+end

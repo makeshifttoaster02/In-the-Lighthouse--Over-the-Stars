@@ -61,3 +61,19 @@ function Leaf:new()
 
     Leaf.super.new(self, images, imageX, imageY, clickable, assetX, assetY, assetWidth, assetHeight, dialogueTree)
 end
+
+function Leaf:dialogueChangeMid4()
+    local dialogueTree = self:getDialogueTree()
+    local dialogueList = dialogueTree:getDialogueList()
+    local new4 = {
+        {"Daniel", "One time, Nana made a quilt for us."},
+        {"Daniel", "On cold winter nights, we would all huddle under one blanket and fall asleep in each other's warmth."},
+        {"Daniel", "Nana, Gael - \nI miss you guys so much."},
+        {"Daniel", "I just want to go home."},
+    }
+
+    dialogueList[4] = new4
+    dialogueTree:setDialogueList(dialogueList)
+    self:setDialogueTree(dialogueTree)
+    self.fresh = true
+end

@@ -37,9 +37,9 @@ function OffsetManager:keypressed(key)
         inputActive = inputActive or Terminal:getHidable(name):isReplyInputActive()
     end
     if not inputActive then
-        if key == "left" then
+        if key == "left" or key == "a" then
             self:decrementOffset(love.graphics.getWidth() / 50)
-        elseif key == "right" then
+        elseif key == "right" or key == "d" then
             self:incrementOffset(love.graphics.getWidth() / 50)
         end
     end

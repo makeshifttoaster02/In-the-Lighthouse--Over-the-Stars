@@ -107,23 +107,37 @@ function DialogueBox:draw()
     end
 end
 
-function DialogueBox:mousereleased(cursorX, cursorY)
+function DialogueBox:mousereleased(cursorX, cursorY, button)
+    local leftMouseClick = 1
+    local rightMouseClick = 2
     if self.visible and string.len(self.currDialogueSubstr) >= math.min(string.len(self.currDialogue), 5) then
         if self:withinBounds(cursorX, cursorY) and not self:onDecisionString() then
-            self.currDialogueTree:trigger()
+            if button == leftMouseClick then
+                self.currDialogueTree:trigger()
+            else
+                self.currDialogueTree:back()
+            end
         end
 
         if self:onDecisionString() then
             self.hovering = false
-            self.yesButton:mousereleased(cursorX, cursorY)
-            self.noButton:mousereleased(cursorX, cursorY)
+            if button == leftMouseClick then
+                self.yesButton:mousereleased(cursorX, cursorY)
+                self.noButton:mousereleased(cursorX, cursorY)
+            end
         end
     end
 end
 
 function DialogueBox:keypressed(key)
-    if self.visible and key == "escape" then
-        self.currDialogueTree:escape()
+    if self.visible then
+        if key == "escape" then
+            self.currDialogueTree:escape()
+        elseif key == "space" or key == "return" or key == "right" then
+            self.currDialogueTree:trigger()
+        elseif key == "backspace" or key == "left" then
+            self.currDialogueTree:back()
+        end
     end
 end
 

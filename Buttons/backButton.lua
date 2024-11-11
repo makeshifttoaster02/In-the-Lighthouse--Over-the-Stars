@@ -10,7 +10,7 @@ end
 function BackButton:mousereleased(cursorX, cursorY)
     if self:withinBounds(cursorX, cursorY) then
         local currHidable = Terminal:getCurrHidable()
-        if currHidable ~= nil and currHidable:isMailMessage() then
+        if currHidable ~= nil and currHidable:isMailMessage() and not Terminal:getHidable("SceneMail1Message7"):isVisible() then
             Terminal:hideAll()
             Terminal:getHidable("SceneMail1"):show()
         else

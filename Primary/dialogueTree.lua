@@ -50,6 +50,15 @@ function DialogueTree:escape()
     DialogueBox:setNotHovering()
 end
 
+function DialogueTree:back()
+    self.dialogueIndex = self.dialogueIndex - 2
+    if self.dialogueIndex < 0 then
+        self:escape()
+    else
+        self:trigger()
+    end
+end
+
 function DialogueTree:setDialogueList(dialogueList)
     self.dialogueList = dialogueList
 end

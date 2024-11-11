@@ -41,8 +41,8 @@ Universal Coordinates: Failed to Retrieve]]
     self.warningIcon1 = love.graphics.newImage("Icons/Exclamation.png")
     self.warningIcon2 = love.graphics.newImage("Icons/Exclamation 2.png")
     self.warningIcon3 = love.graphics.newImage("Icons/Exclamation 3.png")
-    self.warningX = self.boxX + self.boxWidth / 6
-    self.warningY = self.boxY + self.boxHeight / 6
+    self.warningX = self.boxX + self.boxWidth / 3
+    self.warningY = self.boxY + self.boxHeight / 8
     self.warningDesiredLength = Terminal:getHeight() / 25
     self.warningMargin = Terminal:getHeight() / 50
     self.warningRadius = self.warningDesiredLength / 2 + self.warningMargin
@@ -77,7 +77,7 @@ Evacuate immediately.]]
     self.rescueDisappear = true
 
     self.drawRescueHoverBox = false
-    self.rescueX = self.boxX + self.boxWidth / 7 * 2
+    self.rescueX = self.boxX + self.boxWidth / 7 * 6
     self.rescueY = self.boxY + self.boxHeight / 16  * 15
     self.rescueRadius = Terminal:getHeight() / 50
     self.rescueHoverBoxMargin = Terminal:getHeight() / 20
@@ -179,15 +179,16 @@ function SceneRadar1:draw()
     if not self.rescueDisappear then
         love.graphics.circle("fill", self.rescueX, self.rescueY, self.rescueRadius)
         if self.drawRescueHoverBox then
+            local rescueBoxX = self.rescueX - self.rescueHoverBoxWidth
             local rescueBoxY = self.rescueY - self.rescueHoverBoxHeight
             SetColorHEX("#000000")
-            love.graphics.rectangle("fill", self.rescueX, rescueBoxY, self.rescueHoverBoxWidth, self.rescueHoverBoxHeight, self.rescueHoverBoxRadius)
+            love.graphics.rectangle("fill", rescueBoxX, rescueBoxY, self.rescueHoverBoxWidth, self.rescueHoverBoxHeight, self.rescueHoverBoxRadius)
 
             SetColorHEX("#FFFFFF")
-            love.graphics.rectangle("line", self.rescueX, rescueBoxY, self.rescueHoverBoxWidth, self.rescueHoverBoxHeight, self.rescueHoverBoxRadius)
+            love.graphics.rectangle("line", rescueBoxX, rescueBoxY, self.rescueHoverBoxWidth, self.rescueHoverBoxHeight, self.rescueHoverBoxRadius)
 
-            love.graphics.printf(self.rescueHoverBoxTitle, self.rescueHoverBoxTitleFont, self.rescueX + self.rescueHoverBoxMargin, rescueBoxY + self.rescueHoverBoxMargin, self.rescueHoverBoxWidth - 2 * self.margin, "left")
-            love.graphics.printf(self.rescueHoverBoxText, self.rescueHoverBoxTextFont, self.rescueX + self.rescueHoverBoxMargin, rescueBoxY + self.rescueHoverBoxMargin * 2 + self.rescueHoverBoxTitleFontSize, self.rescueHoverBoxWidth - 2 * self.margin, "left")                  
+            love.graphics.printf(self.rescueHoverBoxTitle, self.rescueHoverBoxTitleFont, rescueBoxX + self.rescueHoverBoxMargin, rescueBoxY + self.rescueHoverBoxMargin, self.rescueHoverBoxWidth - 2 * self.margin, "left")
+            love.graphics.printf(self.rescueHoverBoxText, self.rescueHoverBoxTextFont, rescueBoxX + self.rescueHoverBoxMargin, rescueBoxY + self.rescueHoverBoxMargin * 2 + self.rescueHoverBoxTitleFontSize, self.rescueHoverBoxWidth - 2 * self.margin, "left")                  
         end
     end
 
@@ -255,6 +256,7 @@ function SceneRadar1:triggerDay4Phase3()
     SongManager:suddenlyIntoNext()
     Terminal:getHidable("SceneSos2"):untriggerDay4Phase2()
     Background:getDrawable("Bed"):enableClick()
+    Background:getDrawable("Leaf"):dialogueChangeMid4()
 end
 
 function SceneRadar1:isDay4Phase3()
